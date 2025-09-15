@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - InternshipFinder</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        .progress-bar-bg {
+            background-color: #e9ecef;
+        }
+        .progress-bar {
+            background-color: #3b82f6;
+        }
+        .tab.active {
+            border-bottom-color: #3b82f6;
+            color: #3b82f6;
+            background-color: #eff6ff;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+     <header class="bg-white shadow-sm fixed top-0 left-0 right-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center space-x-4">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-8 h-8 bg-blue-600 flex items-center justify-center rounded-md text-white font-bold">
+                            <i class="fas fa-search-location"></i>
+                        </div>
+                        <span class="text-xl font-bold text-gray-900">internSarthi</span>
+                    </div>
+                     <nav class="hidden md:flex items-center space-x-6 ml-6">
+                        <a href="das1.html" class="text-gray-500 hover:text-gray-900 font-medium">Dashboard</a>
+                        <a href="browse.html" class="text-gray-500 hover:text-gray-900 font-medium">Browse Internships</a>
+                        <a href="#" class="text-blue-600 font-semibold border-b-2 border-blue-600 pb-1">My Profile</a>
+                        <a href="all.html" class="text-gray-500 hover:text-gray-900 font-medium">Applications</a>
+                        <a href="govern.html" class="text-gray-500 hover:text-gray-900 font-medium">Govern Internship</a>
+                        <a href="hm.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">intern</a>
+
+
+                    </nav>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="text-gray-500 hover:text-gray-900"><i class="fas fa-bell text-xl"></i></button>
+                     <div class="flex items-center space-x-2">
+                        <img src="https://i.pravatar.cc/40?u=sarahchen" alt="Sarah Chen" class="w-9 h-9 rounded-full">
+                        <span class="font-semibold text-gray-700 hidden sm:block">Sarah Chen</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <main class="pt-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+         <div class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-900">My Profile</h1>
+            <p class="text-gray-600 mt-1">Manage your profile to get better internship matches</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Left Column -->
+            <aside class="lg:col-span-1">
+                <div class="bg-white p-6 rounded-xl shadow-sm text-center">
+                    <div class="relative w-32 h-32 mx-auto mb-4">
+                        <img src="https://i.pravatar.cc/128?u=sarahchen" alt="Sarah Chen" class="w-full h-full rounded-full">
+                         <div class="absolute bottom-0 right-0 bg-blue-600 rounded-full p-2 text-white">
+                            <i class="fas fa-camera"></i>
+                        </div>
+                    </div>
+                    <h2 class="text-2xl font-bold">Sarah Chen</h2>
+                    <p class="text-gray-500">Stanford University</p>
+                    <p class="text-gray-500 text-sm">San Francisco, CA</p>
+                    
+                    <div class="mt-6 text-left">
+                        <label for="completeness" class="font-semibold text-sm">Profile Completeness</label>
+                        <div class="flex items-center justify-between text-sm font-bold text-blue-600 mb-1">
+                            <span>85%</span>
+                        </div>
+                        <div class="w-full h-2 rounded-full progress-bar-bg"><div class="h-2 rounded-full progress-bar" style="width: 85%;"></div></div>
+                        <p class="text-xs text-gray-500 mt-1">Add more skills and experience to reach 100%</p>
+                    </div>
+
+                    <div class="mt-6 text-left space-y-3">
+                        <div class="flex justify-between items-center"><span class="font-semibold">Applications Sent</span><span class="font-bold text-lg">12</span></div>
+                        <div class="flex justify-between items-center"><span class="font-semibold">Profile Views</span><span class="font-bold text-lg">47</span></div>
+                        <div class="flex justify-between items-center"><span class="font-semibold">Average Match Score</span><span class="font-bold text-lg text-green-600">88%</span></div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Right Column -->
+            <section class="lg:col-span-2">
+                <div class="bg-white rounded-xl shadow-sm">
+                    <div class="border-b">
+                        <nav class="flex space-x-1 px-6">
+                            <button data-tab="personal-info" class="tab active px-4 py-4 font-semibold text-gray-500 border-b-2 border-transparent hover:text-blue-600"><i class="fas fa-user mr-2"></i>Personal Info</button>
+                            <button data-tab="education" class="tab px-4 py-4 font-semibold text-gray-500 border-b-2 border-transparent hover:text-blue-600"><i class="fas fa-graduation-cap mr-2"></i>Education</button>
+                            <button data-tab="skills" class="tab px-4 py-4 font-semibold text-gray-500 border-b-2 border-transparent hover:text-blue-600"><i class="fas fa-cogs mr-2"></i>Skills</button>
+                            <button data-tab="experience" class="tab px-4 py-4 font-semibold text-gray-500 border-b-2 border-transparent hover:text-blue-600"><i class="fas fa-briefcase mr-2"></i>Experience</button>
+                            <button data-tab="preferences" class="tab px-4 py-4 font-semibold text-gray-500 border-b-2 border-transparent hover:text-blue-600"><i class="fas fa-sliders-h mr-2"></i>Preferences</button>
+                        </nav>
+                    </div>
+                    <div class="p-6">
+                        <!-- Personal Info Tab Content -->
+                        <div id="personal-info" class="tab-content">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div><label for="first-name" class="font-semibold text-sm">First Name <span class="text-red-500">*</span></label><input type="text" id="first-name" value="Sarah" class="w-full mt-1 p-2 border rounded-lg bg-gray-50"></div>
+                                <div><label for="last-name" class="font-semibold text-sm">Last Name <span class="text-red-500">*</span></label><input type="text" id="last-name" value="Chen" class="w-full mt-1 p-2 border rounded-lg bg-gray-50"></div>
+                                <div class="md:col-span-2"><label for="email" class="font-semibold text-sm">Email <span class="text-red-500">*</span></label><input type="email" id="email" value="sarah.chen@email.com" class="w-full mt-1 p-2 border rounded-lg bg-gray-50"></div>
+                                <div><label for="phone" class="font-semibold text-sm">Phone</label><input type="text" id="phone" value="+1 (555) 123-4567" class="w-full mt-1 p-2 border rounded-lg bg-gray-50"></div>
+                                <div><label for="location" class="font-semibold text-sm">Location</label><input type="text" id="location" value="San Francisco, CA" class="w-full mt-1 p-2 border rounded-lg bg-gray-50"></div>
+                                <div class="md:col-span-2"><label for="bio" class="font-semibold text-sm">Bio</label><textarea id="bio" rows="4" class="w-full mt-1 p-2 border rounded-lg bg-gray-50">Passionate about product management and technology innovation. Experienced in data analysis, user research, and strategic thinking.</textarea></div>
+                            </div>
+                        </div>
+                        <!-- Education Tab Content -->
+                        <div id="education" class="tab-content hidden">
+                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div><label for="university" class="font-semibold text-sm">University <span class="text-red-500">*</span></label><input type="text" id="university" value="Stanford University" class="w-full mt-1 p-2 border rounded-lg bg-gray-50"></div>
+                                <div><label for="degree" class="font-semibold text-sm">Degree <span class="text-red-500">*</span></label><input type="text" id="degree" value="Computer Science" class="w-full mt-1 p-2 border rounded-lg bg-gray-50"></div>
+                                <div><label for="grad-year" class="font-semibold text-sm">Graduation Year</label><input type="text" id="grad-year" value="2024" class="w-full mt-1 p-2 border rounded-lg bg-gray-50"></div>
+                                <div><label for="gpa" class="font-semibold text-sm">GPA</label><input type="text" id="gpa" value="3.8" class="w-full mt-1 p-2 border rounded-lg bg-gray-50"></div>
+                                <div class="md:col-span-2"><label for="courses" class="font-semibold text-sm">Relevant Coursework</label><textarea id="courses" rows="3" class="w-full mt-1 p-2 border rounded-lg bg-gray-50" placeholder="e.g., Machine Learning, Data Structures, Web Development..."></textarea></div>
+                            </div>
+                        </div>
+                        <!-- Skills Tab Content -->
+                        <div id="skills" class="tab-content hidden">
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-lg font-bold">Your Skills</h3>
+                                <button class="bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700 transition"><i class="fas fa-plus mr-2"></i>Add Skill</button>
+                            </div>
+                            <div class="space-y-4">
+                                <!-- Skill Item -->
+                                <div class="flex items-center space-x-4">
+                                    <span class="font-semibold flex-1">Product Strategy</span>
+                                    <div class="w-full h-2 rounded-full progress-bar-bg flex-1"><div class="h-2 rounded-full progress-bar" style="width: 90%;"></div></div>
+                                    <span class="font-semibold text-sm">90%</span>
+                                    <button class="text-gray-400 hover:text-red-500"><i class="fas fa-trash"></i></button>
+                                </div>
+                                 <div class="flex items-center space-x-4">
+                                    <span class="font-semibold flex-1">Data Analysis</span>
+                                    <div class="w-full h-2 rounded-full progress-bar-bg flex-1"><div class="h-2 rounded-full progress-bar" style="width: 85%;"></div></div>
+                                    <span class="font-semibold text-sm">85%</span>
+                                    <button class="text-gray-400 hover:text-red-500"><i class="fas fa-trash"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Experience Tab Content -->
+                        <div id="experience" class="tab-content hidden">
+                           <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-lg font-bold">Work Experience</h3>
+                                <button class="bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700 transition"><i class="fas fa-plus mr-2"></i>Add Experience</button>
+                            </div>
+                            <div class="space-y-6">
+                                <!-- Experience Item 1 -->
+                                <div class="border-b pb-4">
+                                    <div class="flex justify-between items-start">
+                                        <div>
+                                            <h4 class="font-bold text-lg">Product Intern</h4>
+                                            <p class="text-gray-600">TechStart Solutions</p>
+                                            <p class="text-sm text-gray-500">Jun 2023 - Aug 2023</p>
+                                        </div>
+                                        <div class="flex space-x-2 text-gray-400">
+                                            <button class="hover:text-blue-600"><i class="fas fa-pencil-alt"></i></button>
+                                            <button class="hover:text-red-500"><i class="fas fa-trash"></i></button>
+                                        </div>
+                                    </div>
+                                    <p class="mt-2 text-gray-700">Led market research initiatives and analyzed user feedback to improve product features.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Preferences Tab Content -->
+                        <div id="preferences" class="tab-content hidden">
+                             <h3 class="text-lg font-bold mb-4">Internship Preferences</h3>
+                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                 <div>
+                                     <label for="pref-location" class="font-semibold text-sm">Preferred Locations</label>
+                                     <select id="pref-location" class="w-full mt-1 p-2 border rounded-lg bg-gray-50">
+                                         <option>San Francisco Bay Area</option>
+                                         <option>New York, NY</option>
+                                         <option>Remote</option>
+                                     </select>
+                                 </div>
+                                  <div>
+                                     <label for="work-type" class="font-semibold text-sm">Work Type</label>
+                                     <select id="work-type" class="w-full mt-1 p-2 border rounded-lg bg-gray-50">
+                                         <option>Full-time</option>
+                                         <option>Part-time</option>
+                                         <option>Hybrid</option>
+                                     </select>
+                                 </div>
+                                  <div>
+                                     <label for="duration" class="font-semibold text-sm">Duration</label>
+                                     <select id="duration" class="w-full mt-1 p-2 border rounded-lg bg-gray-50">
+                                         <option>3 months</option>
+                                         <option>6 months</option>
+                                         <option>1 year</option>
+                                     </select>
+                                 </div>
+                                  <div>
+                                     <label for="industry" class="font-semibold text-sm">Industry Focus</label>
+                                     <select id="industry" class="w-full mt-1 p-2 border rounded-lg bg-gray-50">
+                                         <option>Technology</option>
+                                         <option>Finance</option>
+                                         <option>Healthcare</option>
+                                     </select>
+                                 </div>
+                                  <div class="md:col-span-2">
+                                     <label for="company-size" class="font-semibold text-sm">Preferred Company Size</label>
+                                     <select id="company-size" class="w-full mt-1 p-2 border rounded-lg bg-gray-50">
+                                         <option>Startup (1-50 employees)</option>
+                                         <option>Mid-size (51-500 employees)</option>
+                                         <option>Large (501+ employees)</option>
+                                     </select>
+                                 </div>
+                             </div>
+                        </div>
+
+                        <div class="mt-6 text-right">
+                            <button class="bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg hover:bg-blue-700 transition">Save Changes</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('.tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // Deactivate all tabs
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.add('hidden'));
+
+                    // Activate the clicked tab
+                    tab.classList.add('active');
+                    document.getElementById(tab.dataset.tab).classList.remove('hidden');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+

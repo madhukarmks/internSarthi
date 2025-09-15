@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InternLink - Create Account</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .gradient-bg {
+            background-image: linear-gradient(120deg, #dbe2e2 0%, #4f95f1 100%);
+            padding: 30px,40px;
+        }
+        .btn-gradient {
+             background-image: linear-gradient(to right, #26de81, #00bcd4);
+        }
+    </style>
+</head>
+<body class="gradient-bg">
+
+    <div class="min-h-screen flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-4xl w-full grid md:grid-cols-2">
+            
+            <!-- Left Side -->
+            <div class="p-10 flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-8 h-8 bg-blue-600 flex items-center justify-center rounded-md text-white font-bold">
+                            <i class="fas fa-link"></i>
+                        </div>
+                        <span class="text-2xl font-bold text-gray-900">InternLink</span>
+                    </div>
+                    <h1 class="text-4xl font-bold mt-8 text-gray-900">Find Your Dream Internship Today</h1>
+                    <p class="mt-4 text-gray-600">Our AI-powered platform matches you with the perfect internships based on your unique skills, experience, and aspirations.</p>
+                </div>
+                <div>
+                    <p class="text-sm font-medium text-gray-500 mb-4">Login or Register with:</p>
+                    <div class="space-y-3">
+                        <button class="w-full flex items-center justify-center py-3 px-4 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition duration-300">
+                            <i class="fab fa-google mr-3"></i> Continue with Google
+                        </button>
+                        <button class="w-full flex items-center justify-center py-3 px-4 bg-blue-800 text-white rounded-lg font-semibold hover:bg-blue-900 transition duration-300">
+                           <i class="fab fa-linkedin-in mr-3"></i> Continue with LinkedIn
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side (Form Container) -->
+            <div id="form-container" class="p-10">
+                 <!-- Sign Up Form -->
+                <div id="signup-form-content">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6">Create your account</h2>
+                    <form class="space-y-4">
+                        <div>
+                            <label for="signup-name" class="block text-sm font-medium text-gray-700">Full Name</label>
+                            <input type="text" id="signup-name" placeholder="John Doe" required class="mt-1 block w-full px-4 py-3 border border-gray-200 rounded-lg bg-gray-50 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label for="signup-email" class="block text-sm font-medium text-gray-700">Email address</label>
+                            <input type="email" id="signup-email" placeholder="you@example.com" required class="mt-1 block w-full px-4 py-3 border border-gray-200 rounded-lg bg-gray-50 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                         <div>
+                            <label for="signup-password" class="block text-sm font-medium text-gray-700">Password</label>
+                            <input type="password" id="signup-password" placeholder="••••••••" required class="mt-1 block w-full px-4 py-3 border border-gray-200 rounded-lg bg-gray-50 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                         <div>
+                            <label for="confirm-password" class="block text-sm font-medium text-gray-700">Confirm Password</label>
+                            <input type="password" id="confirm-password" placeholder="••••••••" required class="mt-1 block w-full px-4 py-3 border border-gray-200 rounded-lg bg-gray-50 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <div>
+                            <button type="submit" class="w-half flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-white btn-gradient font-semibold">
+                                Sign Up
+                            </button>
+                        </div>
+                         <p class="text-sm text-center text-gray-500">
+                            Already have an account? <a href="#" id="show-login" class="font-medium text-blue-600 hover:underline">Sign in</a>
+                        </p>
+                    </form>
+                </div>
+                
+                <!-- Login Form (hidden by default) -->
+                <div id="login-form-content" class="hidden">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6">Login</h2>
+                    <form class="space-y-5">
+                        <div>
+                            <label for="login-email" class="block text-sm font-medium text-gray-700">Email address</label>
+                            <input type="email" id="login-email" placeholder="you@example.com" required class="mt-1 block w-full px-4 py-3 border border-gray-200 rounded-lg bg-gray-50 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                         <div>
+                            <label for="login-password" class="block text-sm font-medium text-gray-700">Password</label>
+                            <input type="password" id="login-password" placeholder="••••••••" required class="mt-1 block w-full px-4 py-3 border border-gray-200 rounded-lg bg-gray-50 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <input id="remember-me" type="checkbox" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+                                <label for="remember-me" class="ml-2 block text-sm text-gray-900">Remember me</label>
+                            </div>
+                            <div class="text-sm">
+                                <a href="#" class="font-medium text-blue-600 hover:text-blue-500">Forgot password?</a>
+                            </div>
+                        </div>
+                        <div>
+                            <button type="submit"  class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-white btn-gradient font-semibold" id="mks">
+                               <a href="das1.html"> Sign In</a>
+                            </button>
+                        </div>
+                        <p class="text-sm text-center text-gray-500">
+                            Don't have an account? <a href="#mks" id="show-signup" class="font-medium text-blue-600 hover:underline">Sign up</a>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const showSignupBtn = document.getElementById('show-signup');
+        const showLoginBtn = document.getElementById('show-login');
+        const loginForm = document.getElementById('login-form-content');
+        const signupForm = document.getElementById('signup-form-content');
+
+        showLoginBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            signupForm.classList.add('hidden');
+            loginForm.classList.remove('hidden');
+        });
+        
+        showSignupBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            loginForm.classList.add('hidden');
+            signupForm.classList.remove('hidden');
+        });
+    </script>
+</body>
+</html>
+

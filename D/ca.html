@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Powered Career Journey</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+            padding-top: 80px; /* Add padding to body to avoid content being hidden by fixed header */
+        }
+        
+        .gradient-text {
+            background: linear-gradient(to right, #6D28D9, #EC4899);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .main-icon-bg {
+            background: linear-gradient(145deg, #a881e8, #7b42d6);
+        }
+
+        .cta-button, .continue-button {
+            background: linear-gradient(to right, #6D28D9, #A78BFA);
+        }
+        
+        .form-container, .skills-container, .interests-container, .final-details-container, .completion-container {
+             background-color: rgba(255, 255, 255, 0.8);
+             backdrop-filter: blur(10px);
+        }
+
+        /* Styles for selection pages */
+        .skill-btn, .interest-btn, .quiz-option {
+            transition: all 0.2s ease-in-out;
+        }
+        .skill-btn.selected, .interest-btn.selected, .quiz-option.selected {
+            background-color: #6D28D9; /* Purple-700 */
+            color: white;
+            border-color: #6D28D9;
+        }
+        .continue-button:disabled {
+            background: #D1D5DB; /* Gray-300 */
+            cursor: not-allowed;
+        }
+        
+        /* Styles for Progress Header */
+        .progress-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #E5E7EB; /* gray-200 */
+            transition: all 0.3s ease;
+        }
+        .progress-dot.completed {
+            background-color: #6D28D9; /* purple-700 */
+        }
+        .progress-dot.active {
+            background-color: #6D28D9; /* purple-700 */
+            transform: scale(1.5);
+        }
+
+        /* Animation for Reward Page */
+        @keyframes pop-in {
+            0% { transform: scale(0.5); opacity: 0; }
+            80% { transform: scale(1.05); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .animate-pop-in {
+            animation: pop-in 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+
+
+    </style>
+</head>
+<body class="text-gray-800 bg-gradient-to-br from-purple-50 to-pink-50">
+    
+    <!-- Progress Header -->
+    <header id="progressBarHeader" class="hidden fixed top-0 left-0 w-full bg-white/80 backdrop-blur-sm shadow-sm z-50">
+        <div class="container mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center">
+                <div class="w-8 h-8 bg-purple-600 flex items-center justify-center rounded-md mr-3">
+                    <i class="fas fa-search-location text-white text-sm"></i>
+                </div>
+                <nav class="hidden md:flex items-center space-x-6 ml-6">
+                        <a href="das1.html" class="text-blue-600 font-semibold border-b-2 border-blue-600 pb-1">BACK TO DASHBOARD</a>
+                     </Nav>
+                <span class="text-lg font-bold text-gray-800">internSarthi</span>
+            </div>
+            <div class="flex items-center space-x-4">
+                <div class="flex items-center space-x-2">
+                    <span class="progress-dot"></span>
+                    <span class="progress-dot"></span>
+                    <span class="progress-dot"></span>
+                    <span class="progress-dot"></span>
+                    <span class="progress-dot"></span>
+                </div>
+                <span id="stepText" class="text-sm font-semibold text-gray-600">Step 1 of 5</span>
+            </div>
+        </div>
+    </header>
+
+
+    <!-- Page 1: Welcome Screen -->
+    <div id="page1" class="min-h-screen flex items-center justify-center pt-0"> <!-- Remove padding for welcome screen -->
+        <main class="container mx-auto px-6 py-16 text-center">
+            <div class="max-w-4xl mx-auto">
+                <div class="mb-8 inline-block p-5 rounded-full main-icon-bg shadow-lg">
+                    <i class="fas fa-bell text-4xl text-white"></i>
+                </div>
+                
+                <h1 class="text-5xl md:text-6xl font-black mb-4">
+                    Welcome to Your <span class="gradient-text">AI-Powered Career Journey</span>
+                </h1>
+                
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto mb-16">
+                    Discover the perfect product management internship that matches your unique skills, interests, and career aspirations with our advanced AI matching system
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-blue-50 p-8 rounded-2xl shadow-sm transition-transform transform hover:-translate-y-2">
+                        <div class="inline-block bg-blue-500 p-5 rounded-full mb-6 shadow-md">
+                            <i class="fas fa-user-edit text-3xl text-white"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Build Your Profile</h3>
+                        <p class="text-gray-600">Tell us about your skills, interests, and career goals</p>
+                    </div>
+                    <div class="bg-green-50 p-8 rounded-2xl shadow-sm transition-transform transform hover:-translate-y-2 border-2 border-green-400">
+                         <div class="inline-block bg-green-500 p-5 rounded-full mb-6 shadow-md">
+                            <i class="fas fa-brain text-3xl text-white"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">AI Analysis & Quiz</h3>
+                        <p class="text-gray-600">Our AI analyzes your profile and tests your knowledge</p>
+                    </div>
+                    <div class="bg-purple-50 p-8 rounded-2xl shadow-sm transition-transform transform hover:-translate-y-2">
+                         <div class="inline-block bg-gradient-to-r from-pink-500 to-purple-500 p-5 rounded-full mb-6 shadow-md">
+                            <i class="fas fa-trophy text-3xl text-white"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Get Matched & Rewarded</h3>
+                        <p class="text-gray-600">Discover perfect matches and and earn exclusive rewards</p>
+                    </div>
+                </div>
+
+                <div class="mt-20">
+                    <button id="startJourneyBtn" class="inline-block px-10 py-4 text-lg font-bold text-white rounded-lg shadow-lg cta-button transition-transform transform hover:scale-105">
+                        Start Your Journey <i class="fas fa-arrow-right ml-2"></i>
+                    </button>
+                    <div class="mt-6 flex items-center justify-center space-x-4 text-gray-500 text-sm">
+                        <span class="flex items-center"><i class="fas fa-bolt text-yellow-500 mr-2"></i>Takes only 5 minutes</span>
+                        <span class="text-gray-300">•</span>
+                        <span class="flex items-center"><i class="fas fa-gift text-red-500 mr-2"></i>Earn rewards</span>
+                        <span class="text-gray-300">•</span>
+                        <span class="flex items-center"><i class="fas fa-magic-wand-sparkles text-pink-500 mr-2"></i>Get matched instantly</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Page 2: User Info Form -->
+    <div id="page2" class="hidden min-h-screen flex items-center justify-center">
+        <main class="container mx-auto px-6 py-16 text-center">
+            <div class="max-w-xl mx-auto bg-white p-8 sm:p-12 rounded-2xl shadow-lg form-container">
+                <div class="mb-6 inline-block p-4 rounded-full" style="background: linear-gradient(145deg, #a881e8, #7b42d6);">
+                    <i class="fas fa-user text-3xl text-white"></i>
+                </div>
+                <h1 class="text-3xl font-bold text-gray-900 mb-2">Tell Us About Yourself</h1>
+                <p class="text-gray-600 mb-8">Let's start with some basic information</p>
+
+                <form id="userInfoForm" class="text-left">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <div>
+                            <label for="fullName" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                            <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400">
+                        </div>
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                            <input type="email" id="email" name="email" placeholder="your.email@university.edu" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400">
+                        </div>
+                    </div>
+                    <div class="mb-6">
+                        <label for="university" class="block text-sm font-medium text-gray-700 mb-1">University</label>
+                        <input type="text" id="university" name="university" placeholder="Your current university" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400">
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                         <div>
+                            <label for="major" class="block text-sm font-medium text-gray-700 mb-1">Major</label>
+                            <input type="text" id="major" name="major" placeholder="e.g., Business, Computer Science" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400">
+                        </div>
+                         <div>
+                            <label for="gradYear" class="block text-sm font-medium text-gray-700 mb-1">Graduation Year</label>
+                            <select id="gradYear" name="gradYear" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400 appearance-none bg-white">
+                                <option value="">Select year</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <button type="button" id="backButton1" class="px-6 py-2.5 text-gray-700 font-semibold bg-gray-200 rounded-lg hover:bg-gray-300 transition-colors">
+                            <i class="fas fa-arrow-left mr-2"></i>Back
+                        </button>
+                        <button type="button" id="continueButton1" class="px-6 py-2.5 text-white font-semibold rounded-lg shadow-md continue-button hover:opacity-90 transition-opacity">
+                            Continue<i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                     <p id="validationMessage" class="text-red-500 text-sm mt-4 text-center hidden">Please fill out at least 3 fields to continue.</p>
+                </div>
+            </form>
+        </main>
+    </div>
+
+    <!-- Page 3: Skills Selection -->
+    <div id="page3" class="hidden min-h-screen flex items-center justify-center">
+        <main class="container mx-auto px-6 py-16 text-center relative">
+            <div class="max-w-3xl mx-auto bg-white p-8 sm:p-12 rounded-2xl shadow-lg skills-container">
+                <div class="mb-6 inline-block p-4 rounded-full bg-green-500">
+                    <i class="fas fa-wrench text-3xl text-white"></i>
+                </div>
+                <h1 class="text-3xl font-bold text-gray-900 mb-2">What Are Your Skills?</h1>
+                <p class="text-gray-600 mb-8">Select all skills that apply to you (choose at least 5)</p>
+
+                <div id="skillsGrid" class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+                    <!-- Skills will be injected by JS -->
+                </div>
+                
+                <div class="mb-8">
+                    <span id="selectedCount" class="bg-blue-100 text-blue-800 font-semibold px-4 py-2 rounded-full">
+                        <i class="fas fa-star mr-2"></i>Selected: 0 skills
+                    </span>
+                </div>
+
+                <div class="flex justify-between items-center">
+                    <button type="button" id="backButton2" class="px-6 py-2.5 text-gray-700 font-semibold bg-gray-200 rounded-lg hover:bg-gray-300 transition-colors">
+                        <i class="fas fa-arrow-left mr-2"></i>Back
+                    </button>
+                    <button type="button" id="continueButton2" class="px-6 py-2.5 text-white font-semibold rounded-lg shadow-md continue-button hover:opacity-90 transition-opacity" disabled>
+                        Continue<i class="fas fa-arrow-right ml-2"></i>
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Page 4: Industries Selection -->
+    <div id="page4" class="hidden min-h-screen flex items-center justify-center">
+        <main class="container mx-auto px-6 py-16 text-center relative">
+            <div class="max-w-3xl mx-auto bg-white p-8 sm:p-12 rounded-2xl shadow-lg interests-container">
+                <div class="mb-6 inline-block p-4 rounded-full bg-gradient-to-br from-pink-500 to-purple-600">
+                    <i class="fas fa-heart text-3xl text-white"></i>
+                </div>
+                <h1 class="text-3xl font-bold text-gray-900 mb-2">What Industries Interest You?</h1>
+                <p class="text-gray-600 mb-8">Choose the areas you're most passionate about</p>
+
+                <div id="interestsGrid" class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+                    <!-- Industries will be injected by JS -->
+                </div>
+                
+                <div class="mb-8">
+                    <span id="selectedInterestsCount" class="bg-green-100 text-green-800 font-semibold px-4 py-2 rounded-full">
+                        <i class="fas fa-check-circle mr-2"></i>Selected: 0 interests
+                    </span>
+                </div>
+
+                <div class="flex justify-between items-center">
+                    <button type="button" id="backButton3" class="px-6 py-2.5 text-gray-700 font-semibold bg-gray-200 rounded-lg hover:bg-gray-300 transition-colors">
+                        <i class="fas fa-arrow-left mr-2"></i>Back
+                    </button>
+                    <button type="button" id="continueButton3" class="px-6 py-2.5 text-white font-semibold rounded-lg shadow-md continue-button hover:opacity-90 transition-opacity">
+                        Continue<i class="fas fa-arrow-right ml-2"></i>
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Page 5: Final Details -->
+    <div id="page5" class="hidden min-h-screen flex items-center justify-center">
+        <main class="container mx-auto px-6 py-16 text-center relative">
+            <div class="max-w-xl mx-auto bg-white p-8 sm:p-12 rounded-2xl shadow-lg final-details-container" style="background-color: #fffaf0;">
+                <div class="mb-6 inline-block p-4 rounded-full bg-orange-500">
+                    <i class="fas fa-cog text-3xl text-white"></i>
+                </div>
+                <h1 class="text-3xl font-bold text-gray-900 mb-2">Final Details</h1>
+                <p class="text-gray-600 mb-8">Just a few more questions to perfect your matches</p>
+
+                <form id="finalDetailsForm" class="text-left space-y-6">
+                    <div>
+                        <label for="experienceLevel" class="block text-sm font-medium text-gray-700 mb-1">Previous Experience Level</label>
+                        <select id="experienceLevel" name="experienceLevel" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400 appearance-none bg-white">
+                            <option value="">Select your experience level</option>
+                            <option value="none">No prior experience</option>
+                            <option value="internship">Previous Internship(s)</option>
+                            <option value="entry">Entry Level (0-1 year)</option>
+                            <option value="mid">Mid Level (2-5 years)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="preferredLocation" class="block text-sm font-medium text-gray-700 mb-1">Preferred Location</label>
+                        <select id="preferredLocation" name="preferredLocation" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400 appearance-none bg-white">
+                            <option value="">Select preferred location</option>
+                            <option value="remote">Remote</option>
+                            <option value="hybrid">Hybrid</option>
+                            <option value="onsite">On-site (Any)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="internshipType" class="block text-sm font-medium text-gray-700 mb-1">Internship Type Preference</label>
+                        <select id="internshipType" name="internshipType" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400 appearance-none bg-white">
+                            <option value="">Select internship type</option>
+                            <option value="full-time">Full-time</option>
+                            <option value="part-time">Part-time</option>
+                            <option value="co-op">Co-op</option>
+                        </select>
+                    </div>
+                </form>
+
+                <div class="mt-10 flex justify-between items-center">
+                    <button type="button" id="backButton4" class="px-6 py-2.5 text-gray-700 font-semibold bg-gray-200 rounded-lg hover:bg-gray-300 transition-colors">
+                        <i class="fas fa-arrow-left mr-2"></i>Back
+                    </button>
+                    <button type="button" id="completeProfileButton" class="px-6 py-2.5 text-white font-semibold rounded-lg shadow-md continue-button hover:opacity-90 transition-opacity">
+                        Complete Profile<i class="fas fa-arrow-right ml-2"></i>
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Page 6: Profile Complete -->
+    <div id="page6" class="hidden min-h-screen flex items-center justify-center">
+        <main class="container mx-auto px-6 py-16 text-center">
+            <div class="max-w-2xl mx-auto bg-white p-8 sm:p-12 rounded-2xl shadow-lg completion-container">
+                 <div class="mb-6 inline-block p-5 rounded-full" style="background: linear-gradient(145deg, #a881e8, #7b42d6);">
+                    <i class="fas fa-check text-4xl text-white"></i>
+                </div>
+                <h1 class="text-4xl font-bold text-gray-900 mb-3">Profile Complete!</h1>
+                <p class="text-gray-600 mb-10">Ready to discover your perfect internship matches? Our AI will analyze your profile and find the best opportunities for you.</p>
+
+                <div class="bg-gradient-to-r from-green-50 to-blue-50 p-6 rounded-xl flex items-center justify-around text-center mb-10">
+                    <div>
+                        <div class="w-16 h-16 bg-green-500 text-white flex items-center justify-center rounded-full mx-auto mb-2 text-2xl">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <h4 class="font-semibold text-gray-800">Profile Ready</h4>
+                    </div>
+                     <div>
+                        <div id="skillsCountCircle" class="w-16 h-16 bg-blue-500 text-white flex items-center justify-center rounded-full mx-auto mb-2 text-2xl font-bold">5</div>
+                        <h4 class="font-semibold text-gray-800">Skills Added</h4>
+                    </div>
+                     <div>
+                        <div id="interestsCountCircle" class="w-16 h-16 bg-purple-500 text-white flex items-center justify-center rounded-full mx-auto mb-2 text-2xl font-bold">5</div>
+                        <h4 class="font-semibold text-gray-800">Interests Selected</h4>
+                    </div>
+                </div>
+
+                <button id="findMatchesBtn" class="w-full mb-6 px-8 py-4 text-lg font-bold text-white rounded-lg shadow-lg continue-button transition-transform transform hover:scale-105">
+                    Find My Matches <i class="fas fa-search ml-2"></i>
+                </button>
+
+                <div class="flex justify-between items-center">
+                    <button type="button" id="backButton5" class="px-6 py-2.5 text-gray-700 font-semibold bg-gray-200 rounded-lg hover:bg-gray-300 transition-colors">
+                        <i class="fas fa-arrow-left mr-2"></i>Back
+                    </button>
+                    <button type="button" id="continueButton4" class="px-6 py-2.5 text-white font-semibold rounded-lg shadow-md cta-button hover:opacity-90 transition-opacity">
+                        Continue<i class="fas fa-arrow-right ml-2"></i>
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Page 7: Analyzing Profile -->
+    <div id="page7" class="hidden min-h-screen flex items-center justify-center">
+        <main class="container mx-auto px-6 py-16 text-center">
+            <div class="max-w-lg mx-auto">
+                 <div class="relative mb-8 inline-block">
+                    <div class="absolute inset-0 bg-purple-200 rounded-full blur-2xl opacity-50"></div>
+                    <div class="relative inline-block p-6 rounded-full" style="background: linear-gradient(145deg, #a881e8, #7b42d6);">
+                        <i class="fas fa-brain text-5xl text-white animate-pulse"></i>
+                    </div>
+                </div>
+                <h1 class="text-4xl font-bold text-gray-900 mb-3">AI is Analyzing Your Profile</h1>
+                <p class="text-gray-600 mb-10">Our intelligent algorithms are matching you with the perfect internship opportunities based on your unique profile...</p>
+                <div class="flex justify-center items-center space-x-2 mb-10">
+                    <span class="w-3 h-3 bg-blue-500 rounded-full animate-bounce"></span>
+                    <span class="w-3 h-3 bg-purple-500 rounded-full animate-bounce" style="animation-delay: 0.2s;"></span>
+                    <span class="w-3 h-3 bg-pink-500 rounded-full animate-bounce" style="animation-delay: 0.4s;"></span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full p-1.5 shadow-inner">
+                     <div id="progressBar" class="bg-gradient-to-r from-blue-400 to-purple-500 text-xs font-medium text-blue-100 text-center p-1 leading-none rounded-full" style="width: 0%">
+                        <div class="flex justify-between items-center px-2">
+                             <span class="flex items-center"><i class="fas fa-bolt mr-2"></i>Analyzing skills & interests</span>
+                             <span id="progressText">0%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Page 8: AI-Matched Internships -->
+    <div id="page8" class="hidden min-h-screen flex items-center justify-center">
+        <main class="container mx-auto px-6 py-16">
+            <div class="max-w-4xl mx-auto text-center">
+                <div class="mb-8 inline-block p-5 rounded-full bg-gradient-to-br from-teal-100 to-green-200">
+                    <i class="fas fa-star text-4xl text-teal-500"></i>
+                </div>
+                <h1 class="text-4xl font-bold text-gray-900 mb-2">Your AI-Matched Internships</h1>
+                <p class="text-gray-600 mb-12">Based on your profile, here are your top recommendations</p>
+
+                <div class="space-y-6 text-left">
+                    <!-- Internship Cards will be injected here -->
+                    <div class="bg-white p-6 rounded-2xl shadow-lg border border-transparent hover:border-purple-400 transition-all flex items-center space-x-6">
+                        <img src="https://placehold.co/64x64/6366F1/FFFFFF?text=TS" alt="TechCorp Logo" class="w-16 h-16 rounded-xl object-cover flex-shrink-0">
+                        <div class="flex-grow">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <h3 class="text-xl font-bold text-gray-900">Product Management Intern</h3>
+                                    <p class="text-gray-500">TechCorp Solutions • San Francisco, CA</p>
+                                    <p class="text-green-600 font-bold text-lg mt-1">$28/hour</p>
+                                    <p class="text-sm text-purple-600 mt-2">Perfect match for your product strategy and data analysis skills</p>
+                                </div>
+                                <div class="text-right flex-shrink-0 ml-4">
+                                    <p class="text-lg font-bold text-gray-800">95%</p>
+                                    <div class="w-24 bg-gray-200 rounded-full h-2.5 mt-1">
+                                        <div class="bg-green-500 h-2.5 rounded-full" style="width: 95%"></div>
+                                    </div>
+                                    <button class="mt-4 px-6 py-2 bg-green-500 text-white font-semibold rounded-lg hover:bg-green-600 transition-colors">Apply Now</button>
+                                </div>
+                            </div>
+                             <div class="mt-4 flex flex-wrap gap-2">
+                                <span class="bg-purple-100 text-purple-800 text-xs font-medium px-2.5 py-1 rounded-full">Mentorship Program</span>
+                                <span class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2.5 py-1 rounded-full">Free Lunch</span>
+                                <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-1 rounded-full">Learning Budget</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Challenge Section -->
+                <div class="mt-12 bg-gradient-to-r from-yellow-50 to-orange-50 p-8 rounded-2xl text-center">
+                     <div class="inline-block bg-orange-400 p-4 rounded-full mb-4">
+                        <i class="fas fa-comment-dots text-2xl text-white"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">Ready for a Quick Challenge?</h2>
+                    <p class="text-gray-600 max-w-lg mx-auto mb-6">Test your product management knowledge with AI-generated questions based on your interests and earn exclusive rewards!</p>
+                    <button id="takeChallengeBtn" class="px-8 py-3 bg-orange-500 text-white font-semibold rounded-lg shadow-md hover:bg-orange-600 transition-colors">
+                        Take the Challenge <i class="fas fa-trophy ml-2"></i>
+                    </button>
+                </div>
+
+
+                <button id="startOverBtn" class="mt-12 px-8 py-3 text-gray-700 font-semibold bg-gray-200 rounded-lg hover:bg-gray-300 transition-colors">
+                    <i class="fas fa-redo-alt mr-2"></i>Start Over
+                </button>
+            </div>
+        </main>
+    </div>
+
+    <!-- Page 9: Quiz Page -->
+    <div id="page9" class="hidden min-h-screen flex items-center justify-center">
+        <main class="container mx-auto px-6 py-16">
+            <div class="max-w-3xl mx-auto bg-white p-8 sm:p-12 rounded-2xl shadow-lg">
+                <div class="flex justify-between items-center mb-6">
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-900">Product Management Challenge</h1>
+                        <p class="text-gray-500">Test your knowledge and earn rewards!</p>
+                    </div>
+                    <button id="quizBackBtn" class="text-gray-600 hover:text-gray-900">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+
+                <div class="w-full bg-gray-200 rounded-full h-2.5 mb-6">
+                    <div id="quizProgressBar" class="bg-purple-600 h-2.5 rounded-full transition-all duration-500" style="width: 10%"></div>
+                </div>
+
+                <div id="quizContent" class="text-left">
+                    <p class="text-lg font-semibold text-gray-800 mb-6" id="questionNumber">Question 1/10</p>
+                    <h2 class="text-xl font-bold mb-6" id="questionText">What is the primary goal of a minimum viable product (MVP)?</h2>
+                    <div id="optionsContainer" class="space-y-4">
+                        <!-- Options will be injected here -->
+                    </div>
+                </div>
+
+                <div class="flex justify-between items-center mt-10">
+                    <button id="quizPrevBtn" class="px-6 py-2.5 text-gray-700 font-semibold bg-gray-200 rounded-lg hover:bg-gray-300 transition-colors">
+                       <i class="fas fa-arrow-left mr-2"></i> Previous
+                    </button>
+                     <button id="quizNextBtn" class="px-6 py-2.5 text-white font-semibold rounded-lg shadow-md continue-button hover:opacity-90 transition-opacity">
+                        Next <i class="fas fa-arrow-right ml-2"></i>
+                    </button>
+                    <button id="finishQuizBtn" class="hidden px-6 py-2.5 text-white font-semibold rounded-lg shadow-md bg-green-500 hover:bg-green-600 transition-colors">
+                        Finish Challenge <i class="fas fa-check-circle ml-2"></i>
+                    </button>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Page 10: Reward Unlocked -->
+    <div id="page10" class="hidden min-h-screen flex items-center justify-center">
+        <main class="container mx-auto px-6 py-16 text-center">
+            <div class="max-w-md mx-auto">
+                <div id="rewardIcon" class="mb-8 inline-block p-6 rounded-full" style="background: linear-gradient(145deg, #a881e8, #7b42d6);">
+                    <i class="fas fa-trophy text-5xl text-white"></i>
+                </div>
+                <h1 id="rewardTitle" class="text-4xl font-bold text-gray-900 mb-4">
+                   <span class="mr-2">🎉</span> Reward Unlocked!
+                </h1>
+                <div id="rewardBox" class="bg-gradient-to-r from-blue-100 to-purple-100 p-6 rounded-2xl shadow-lg">
+                    <h2 class="text-2xl font-bold text-gray-800">Rising Star Badge + Enhanced Visibility</h2>
+                    <p class="text-gray-600 mt-1">You've earned this exclusive reward!</p>
+                    <p id="rewardAmount" class="text-xl font-bold text-green-600 mt-4"></p>
+                </div>
+                <button id="backToMatchesBtn" class="mt-10 px-8 py-3 text-white font-semibold rounded-lg shadow-md cta-button hover:opacity-90 transition-opacity">
+                    <i class="fas fa-arrow-left mr-2"></i> View My Matches
+                </button>
+            </div>
+        </main>
+    </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Page elements
+            const pages = [
+                document.getElementById('page1'), document.getElementById('page2'),
+                document.getElementById('page3'), document.getElementById('page4'),
+                document.getElementById('page5'), document.getElementById('page6'),
+                document.getElementById('page7'), document.getElementById('page8'),
+                document.getElementById('page9'), document.getElementById('page10')
+            ];
+
+            // Header elements
+            const header = document.getElementById('progressBarHeader');
+            const progressDots = header.querySelectorAll('.progress-dot');
+            const stepText = document.getElementById('stepText');
+
+            // Controls
+            const startBtn = document.getElementById('startJourneyBtn');
+            const backBtn1 = document.getElementById('backButton1');
+            const continueBtn1 = document.getElementById('continueButton1');
+            const form = document.getElementById('userInfoForm');
+            const validationMsg = document.getElementById('validationMessage');
+            const gradYearSelect = document.getElementById('gradYear');
+            const backBtn2 = document.getElementById('backButton2');
+            const continueBtn2 = document.getElementById('continueButton2');
+            const skillsGrid = document.getElementById('skillsGrid');
+            const selectedCountEl = document.getElementById('selectedCount');
+            const backBtn3 = document.getElementById('backButton3');
+            const continueBtn3 = document.getElementById('continueButton3');
+            const interestsGrid = document.getElementById('interestsGrid');
+            const selectedInterestsCountEl = document.getElementById('selectedInterestsCount');
+            const backBtn4 = document.getElementById('backButton4');
+            const completeProfileBtn = document.getElementById('completeProfileButton');
+            const backBtn5 = document.getElementById('backButton5');
+            const findMatchesBtn = document.getElementById('findMatchesBtn');
+            const continueBtn4 = document.getElementById('continueButton4');
+            const skillsCountCircle = document.getElementById('skillsCountCircle');
+            const interestsCountCircle = document.getElementById('interestsCountCircle');
+            const progressBar = document.getElementById('progressBar');
+            const progressText = document.getElementById('progressText');
+            const startOverBtn = document.getElementById('startOverBtn');
+            const takeChallengeBtn = document.getElementById('takeChallengeBtn');
+            const quizBackBtn = document.getElementById('quizBackBtn');
+            const quizProgressBar = document.getElementById('quizProgressBar');
+            const questionNumberEl = document.getElementById('questionNumber');
+            const questionTextEl = document.getElementById('questionText');
+            const optionsContainer = document.getElementById('optionsContainer');
+            const quizPrevBtn = document.getElementById('quizPrevBtn');
+            const quizNextBtn = document.getElementById('quizNextBtn');
+            const finishQuizBtn = document.getElementById('finishQuizBtn');
+            const backToMatchesBtn = document.getElementById('backToMatchesBtn');
+            const rewardAmountEl = document.getElementById('rewardAmount');
+            const rewardIcon = document.getElementById('rewardIcon');
+            const rewardTitle = document.getElementById('rewardTitle');
+            const rewardBox = document.getElementById('rewardBox');
+            
+
+            // Populate graduation year dropdown
+            const currentYear = new Date().getFullYear();
+            for (let i = currentYear - 5; i <= currentYear + 5; i++) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.textContent = i;
+                gradYearSelect.appendChild(option);
+            }
+            
+            // --- Progress Header Logic ---
+            function updateProgress(currentStep) {
+                const totalSteps = 5;
+                stepText.textContent = currentStep > totalSteps ? 'Matches Found' : `Step ${currentStep} of ${totalSteps}`;
+                progressDots.forEach((dot, index) => {
+                    dot.classList.remove('active', 'completed');
+                    if (index < currentStep -1) dot.classList.add('completed');
+                    else if (index === currentStep - 1) dot.classList.add('active');
+                    if(currentStep > totalSteps) dot.classList.add('completed');
+                });
+            }
+
+            // --- Navigation Logic ---
+            function showPage(pageToShow) {
+                pages.forEach(page => page.classList.add('hidden'));
+                pageToShow.classList.remove('hidden');
+
+                if (pageToShow.id === 'page1') {
+                    header.classList.add('hidden');
+                    document.body.style.paddingTop = '0px';
+                } else {
+                    header.classList.remove('hidden');
+                    document.body.style.paddingTop = '80px';
+                    let step = parseInt(pageToShow.id.replace('page', ''), 10) - 1;
+                    if(step > 5) step = 6;
+                    updateProgress(step);
+                }
+
+                // Trigger reward animation
+                if (pageToShow.id === 'page10') {
+                    [rewardIcon, rewardTitle, rewardBox].forEach((el, i) => {
+                        el.classList.remove('animate-pop-in');
+                        // a slight delay to re-trigger animation
+                        setTimeout(() => {
+                           el.classList.add('animate-pop-in');
+                           el.style.animationDelay = `${i * 150}ms`;
+                        }, 10);
+                    });
+                }
+            }
+            
+            // --- Event Listeners ---
+            startBtn.addEventListener('click', () => showPage(pages[1]));
+            backBtn1.addEventListener('click', () => showPage(pages[0]));
+            continueBtn1.addEventListener('click', () => {
+                const inputs = form.querySelectorAll('input, select');
+                let filledFields = 0;
+                inputs.forEach(input => { if (input.value.trim() !== '') filledFields++; });
+                if (filledFields >= 3) {
+                    validationMsg.classList.add('hidden');
+                    showPage(pages[2]);
+                } else {
+                    validationMsg.classList.remove('hidden');
+                }
+            });
+            backBtn2.addEventListener('click', () => showPage(pages[1]));
+            continueBtn2.addEventListener('click', () => { if (!continueBtn2.disabled) showPage(pages[3]); });
+            backBtn3.addEventListener('click', () => showPage(pages[2]));
+            continueBtn3.addEventListener('click', () => showPage(pages[4]));
+            backBtn4.addEventListener('click', () => showPage(pages[3]));
+            completeProfileBtn.addEventListener('click', () => {
+                skillsCountCircle.textContent = selectedSkills.size;
+                interestsCountCircle.textContent = selectedInterests.size;
+                showPage(pages[5]);
+            });
+            backBtn5.addEventListener('click', () => showPage(pages[4]));
+            let analysisInterval;
+            findMatchesBtn.addEventListener('click', () => {
+                showPage(pages[6]);
+                let progress = 0;
+                if(analysisInterval) clearInterval(analysisInterval);
+                analysisInterval = setInterval(() => {
+                    progress += 1;
+                    progressBar.style.width = progress + '%';
+                    progressText.textContent = progress + '%';
+                    if (progress >= 100) {
+                        clearInterval(analysisInterval);
+                        setTimeout(() => showPage(pages[7]), 500); 
+                    }
+                }, 35);
+            });
+            continueBtn4.addEventListener('click', () => showPage(pages[7]));
+            startOverBtn.addEventListener('click', () => showPage(pages[0]));
+            takeChallengeBtn.addEventListener('click', () => showPage(pages[8]));
+            backToMatchesBtn.addEventListener('click', () => showPage(pages[7]));
+
+            // --- Selection Logic (Skills & Interests) ---
+            let selectedSkills = new Set();
+            let selectedInterests = new Set();
+            const skills = ['Product Strategy', 'Data Analysis', 'User Research', 'Market Research', 'Agile/Scrum', 'SQL', 'Python', 'Excel', 'PowerBI', 'Tableau', 'Wireframing', 'A/B Testing', 'Customer Analytics', 'Competitive Analysis', 'Project Management', 'Stakeholder Management', 'Requirements Gathering', 'Product Roadmapping', 'Feature Prioritization', 'Go-to-Market Strategy'];
+            const industries = ['FinTech', 'E-commerce', 'Healthcare Tech', 'EdTech', 'Social Media', 'Enterprise Software', 'Mobile Apps', 'AI/Machine Learning', 'IoT', 'Gaming', 'Sustainability Tech', 'Consumer Products', 'B2B SaaS', 'Marketplace Platforms', 'DevTools', 'Blockchain', 'AR/VR', 'Cybersecurity'];
+            
+            function setupSelectionGrid(grid, items, selectedSet, counterEl, type) {
+                if (grid.children.length > 0) return;
+                items.forEach(item => {
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.textContent = item;
+                    btn.className = `w-full text-left sm:text-center px-4 py-3 border border-gray-300 rounded-lg hover:bg-gray-100 ${type}-btn`;
+                    grid.appendChild(btn);
+                });
+                grid.addEventListener('click', e => {
+                    if (e.target.classList.contains(`${type}-btn`)) {
+                        const item = e.target.textContent;
+                        e.target.classList.toggle('selected');
+                        selectedSet.has(item) ? selectedSet.delete(item) : selectedSet.add(item);
+                        const icon = type === 'skill' ? 'fa-star' : 'fa-check-circle';
+                        counterEl.innerHTML = `<i class="fas ${icon} mr-2"></i>Selected: ${selectedSet.size} ${type}s`;
+                        if (type === 'skill') continueBtn2.disabled = selectedSet.size < 5;
+                    }
+                });
+            }
+            setupSelectionGrid(skillsGrid, skills, selectedSkills, selectedCountEl, 'skill');
+            setupSelectionGrid(interestsGrid, industries, selectedInterests, selectedInterestsCountEl, 'interest');
+
+            // --- Quiz Logic ---
+            const quizQuestions = [
+                { question: "What is the primary goal of a Minimum Viable Product (MVP)?", options: ["To build a perfect product on the first try", "To test a core hypothesis with minimal resources", "To generate maximum revenue quickly", "To include as many features as possible"], answer: "To test a core hypothesis with minimal resources" },
+                { question: "Which is NOT a common prioritization framework?", options: ["RICE", "MoSCoW", "Kano Model", "SWOT Analysis"], answer: "SWOT Analysis" },
+                { question: "What does 'A/B testing' primarily help a PM to do?", options: ["Decide on the product's architecture", "Compare two versions of a feature to see which performs better", "Plan the marketing campaign", "Interview potential users"], answer: "Compare two versions of a feature to see which performs better" },
+                { question: "In Agile, what is a 'user story'?", options: ["A detailed technical specification", "A formal stakeholder requirement", "An informal explanation of a feature from the user's perspective", "A user-facing bug report"], answer: "An informal explanation of a feature from the user's perspective" },
+                { question: "The '5 Whys' technique is used for what purpose?", options: ["Determining pricing strategy", "Exploring cause-and-effect relationships of a problem", "Brainstorming new features", "Prioritizing the backlog"], answer: "Exploring cause-and-effect relationships of a problem" },
+                { question: "What is a 'product roadmap'?", options: ["A committed timeline of releases", "A high-level visual summary of the product's vision and direction", "A list of all current bugs", "The contract with the dev team"], answer: "A high-level visual summary of the product's vision and direction" },
+                { question: "Which is often considered a 'vanity metric'?", options: ["Conversion Rate", "Customer Lifetime Value (CLV)", "Total number of sign-ups", "Monthly Recurring Revenue (MRR)"], answer: "Total number of sign-ups" },
+                { question: "What is the purpose of a 'sprint retrospective'?", options: ["To plan the next sprint", "To demo work to stakeholders", "To reflect on the past sprint and identify improvements", "To assign tasks to the team"], answer: "To reflect on the past sprint and identify improvements" },
+                { question: "What is 'product-market fit'?", options: ["The product is in many markets", "The marketing is effective", "Being in a good market with a product that can satisfy that market", "The product has more features than competitors"], answer: "Being in a good market with a product that can satisfy that market" },
+                { question: "Which is an example of qualitative user feedback?", options: ["A 1-5 satisfaction rating", "Click-through rate of a button", "Website bounce rate", "A one-on-one user interview transcript"], answer: "A one-on-one user interview transcript" }
+            ];
+            
+            let currentQuestionIndex = 0;
+            let userAnswers = new Array(quizQuestions.length).fill(null);
+
+            function renderQuestion(index) {
+                const question = quizQuestions[index];
+                questionNumberEl.textContent = `Question ${index + 1}/${quizQuestions.length}`;
+                questionTextEl.textContent = question.question;
+                optionsContainer.innerHTML = '';
+                question.options.forEach(optionText => {
+                    const btn = document.createElement('button');
+                    btn.textContent = optionText;
+                    btn.className = 'quiz-option w-full text-left p-4 border border-gray-300 rounded-lg hover:bg-gray-100';
+                    if (userAnswers[index] === optionText) btn.classList.add('selected');
+                    btn.addEventListener('click', () => {
+                        userAnswers[index] = optionText;
+                        renderQuestion(index);
+                    });
+                    optionsContainer.appendChild(btn);
+                });
+                quizProgressBar.style.width = `${((index + 1) / quizQuestions.length) * 100}%`;
+                quizPrevBtn.classList.toggle('hidden', index === 0);
+                quizNextBtn.classList.toggle('hidden', index === quizQuestions.length - 1);
+                finishQuizBtn.classList.toggle('hidden', index !== quizQuestions.length - 1);
+            }
+
+            quizBackBtn.addEventListener('click', () => showPage(pages[7]));
+            quizNextBtn.addEventListener('click', () => { if (currentQuestionIndex < quizQuestions.length - 1) renderQuestion(++currentQuestionIndex); });
+            quizPrevBtn.addEventListener('click', () => { if (currentQuestionIndex > 0) renderQuestion(--currentQuestionIndex); });
+            finishQuizBtn.addEventListener('click', () => {
+                let score = 0;
+                userAnswers.forEach((answer, i) => { if (answer === quizQuestions[i].answer) score++; });
+                const earnings = score * 10;
+                rewardAmountEl.textContent = `You've also earned $${earnings} for your knowledge!`;
+                showPage(pages[9]);
+            });
+
+        });
+    </script>
+
+</body>
+</html>
+

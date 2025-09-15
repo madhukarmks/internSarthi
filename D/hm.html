@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Internship Finder</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --primary-color: #4A90E2;
+            --primary-hover: #357ABD;
+            --background-color: #F5F7FA;
+            --card-background: #FFFFFF;
+            --text-color: #4A4A4A;
+            --heading-color: #333333;
+            --border-color: #E0E6ED;
+            --shadow-color: rgba(74, 144, 226, 0.1);
+            --tag-bg-data: #E7F3FF;
+            --tag-text-data: #4A90E2;
+            --tag-bg-ai: #E5F8F0;
+            --tag-text-ai: #2D9D78;
+            --tag-bg-web: #FFF4E5;
+            --tag-text-web: #F5A623;
+            --tag-bg-robotics: #FDEEEE;
+            --tag-text-robotics: #D9534F;
+            --tag-bg-genai: #EAE8FD;
+            --tag-text-genai: #6F42C1;
+            --tag-bg-cv: #e0f7fa;
+            --tag-text-cv: #00796b;
+        }
+
+        /* General Body Styles */
+        body {
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--background-color);
+            margin: 0;
+            color: var(--text-color);
+            font-size: 14px;
+        }
+
+        /* Main App Layout */
+        .app-container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .app-header {
+            background-color: var(--card-background);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-brand {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+        }
+        .header-brand .logo-icon {
+            background-color: var(--primary-color);
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+        }
+
+        .header-nav {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-left: 40px;
+        }
+
+        .header-nav-link {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 22px 4px; /* Extend padding to align underline */
+            position: relative;
+            transition: color 0.2s ease;
+        }
+        .header-nav-link:hover {
+            color: var(--primary-color);
+        }
+        .header-nav-link.active {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        .header-nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background-color: var(--primary-color);
+            border-radius: 2px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .search-bar {
+            position: relative;
+        }
+        .search-bar i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
+        .search-bar input {
+            background-color: #F5F7FA;
+            border: 1px solid #E0E6ED;
+            border-radius: 20px;
+            padding: 9px 15px 9px 40px;
+            width: 250px;
+            transition: all 0.2s ease;
+        }
+        .search-bar input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px var(--shadow-color);
+        }
+
+
+        .user-profile-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background-color: #E0E6ED;
+            color: #555;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        /* Main Content Grid */
+        .main-content {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 30px;
+            padding: 30px 40px;
+            flex-grow: 1;
+        }
+
+        @media (max-width: 1024px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+             .header-nav { display: none; }
+        }
+
+        /* Shared Sidebar Card Style */
+        .sidebar-card {
+            background-color: var(--card-background);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+        .sidebar-card h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: var(--heading-color);
+        }
+
+        /* Form elements */
+        .form-group { margin-bottom: 15px; }
+        .form-group label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            font-family: 'Poppins', sans-serif;
+            box-sizing: border-box;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px var(--shadow-color);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .btn {
+            padding: 10px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 14px;
+            flex-grow: 1;
+            transition: all 0.2s ease;
+        }
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        .btn-primary:hover { background-color: var(--primary-hover); }
+
+        .btn-secondary {
+            background-color: #F0F2F5;
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+        }
+        .btn-secondary:hover { background-color: #E8EBEF; }
+
+
+        /* Saved Internships Styling */
+        #saved-internships-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-size: 13px;
+            color: #555;
+        }
+        #saved-internships-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        #saved-internships-list li:last-child {
+            border-bottom: none;
+        }
+
+        /* Internships Feed Area */
+        .internships-feed {
+            padding-left: 10px;
+        }
+
+        /* Feed Header */
+        .feed-header {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .feed-tabs {
+            display: flex;
+            background-color: #E8EBEF;
+            border-radius: 8px;
+            padding: 5px;
+        }
+        .feed-tabs button {
+            background: none;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            color: var(--text-color);
+            transition: all 0.2s ease;
+        }
+        .feed-tabs button.active {
+            background-color: var(--card-background);
+            color: var(--primary-color);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .feed-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .feed-info {
+            font-size: 13px;
+            color: #666;
+        }
+        .feed-info span {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        /* --- ANIMATION FOR MOCK INTERVIEW BUTTON --- */
+        @keyframes pulse-glow {
+            0% {
+                box-shadow: 0 0 0 0 rgba(74, 144, 226, 0.6);
+            }
+            70% {
+                box-shadow: 0 0 0 12px rgba(74, 144, 226, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(74, 144, 226, 0);
+            }
+        }
+
+        #launch-interview-btn {
+            padding: 8px 16px;
+            font-size: 13px;
+            flex-grow: 0; /* Override .btn style */
+            flex-shrink: 0;
+            animation: pulse-glow 2.5s infinite;
+        }
+        #launch-interview-btn i {
+            margin-right: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .feed-header { flex-direction: column; align-items: stretch; gap: 15px; }
+            .feed-actions { flex-direction: column; align-items: stretch; text-align: center;}
+        }
+
+        /* Internship Cards Grid */
+        .internship-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .internship-card {
+            background-color: var(--card-background);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .internship-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px var(--shadow-color);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        .card-header h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin: 0;
+            color: var(--heading-color);
+        }
+        .card-header .company {
+            font-size: 13px;
+            color: #666;
+            margin-top: 4px;
+        }
+        .save-icon {
+            font-size: 18px;
+            cursor: pointer;
+            color: #aaa;
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+        .save-icon:hover { color: var(--primary-color); transform: scale(1.1); }
+        .save-icon.saved { color: var(--primary-color); }
+
+
+        .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+        .tag {
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        .tag-data { background-color: var(--tag-bg-data); color: var(--tag-text-data); }
+        .tag-ai { background-color: var(--tag-bg-ai); color: var(--tag-text-ai); }
+        .tag-web { background-color: var(--tag-bg-web); color: var(--tag-text-web); }
+        .tag-robotics { background-color: var(--tag-bg-robotics); color: var(--tag-text-robotics); }
+        .tag-genai { background-color: var(--tag-bg-genai); color: var(--tag-text-genai); }
+        .tag-cv { background-color: var(--tag-bg-cv); color: var(--tag-text-cv); }
+        
+        .card-footer {
+            margin-top: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--border-color);
+            padding-top: 15px;
+        }
+
+        .stipend {
+            font-weight: 600;
+            color: var(--heading-color);
+        }
+        .stipend .location {
+            display: block;
+            font-weight: 400;
+            font-size: 12px;
+            color: #777;
+        }
+
+        .btn-view {
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            padding: 8px 18px;
+            border-radius: 6px;
+            font-weight: 500;
+            font-size: 13px;
+            transition: background-color 0.2s ease;
+        }
+        .btn-view:hover { background-color: var(--primary-hover); }
+
+        /* --- STYLES FOR MOCK INTERVIEW MODAL --- */
+        #assistant-modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #assistant-modal-backdrop.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        #virtual-assistant-container {
+             font-family: 'Inter', sans-serif; /* Use Inter font for the modal */
+             transition: transform 0.3s ease, opacity 0.3s ease;
+             transform: scale(0.95);
+             opacity: 0;
+        }
+
+        #assistant-modal-backdrop.visible #virtual-assistant-container {
+             transform: scale(1);
+             opacity: 1;
+        }
+
+        .message-container {
+            scroll-behavior: smooth;
+        }
+
+        /* Typing indicator animation */
+        .typing-indicator span {
+            animation: bounce 1.4s infinite ease-in-out both;
+        }
+        .typing-indicator span:nth-child(1) { animation-delay: -0.32s; }
+        .typing-indicator span:nth-child(2) { animation-delay: -0.16s; }
+        @keyframes bounce {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1.0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <header class="app-header">
+            <div class="flex items-center">
+                 <div class="header-brand">
+                    <div class="logo-icon"><i class="fa-solid fa-search"></i></div>
+                    <span>internSarthi</span>
+                </div>
+                <nav class="hidden md:flex items-center space-x-6 ml-6">
+                        <a href="das1.html" class="text-blue-600 font-semibold border-b-2 border-blue-600 pb-1">Dashboard</a>
+                        <a href="browse.html" class="text-gray-500 hover:text-gray-900 font-medium">Browse Internships</a>
+                        <a href="profile.html" class="text-gray-500 hover:text-gray-900 font-medium">My Profile</a>
+                        <a href="all.html" class="text-gray-500 hover:text-gray-900 font-medium">Applications</a>
+                        <a href="govern.html" class="text-gray-500 hover:text-gray-900 font-medium">Govern Internships</a>
+                        <a href="hm.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">intern</a>
+                        
+
+                    </nav>
+            </div>
+            <div class="header-right">
+                <div class="search-bar">
+                    <i class="fa-solid fa-search"></i>
+                    <input type="text" placeholder="Search">
+                </div>
+                <div class="user-profile-icon">A</div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <aside class="sidebar">
+                <div class="sidebar-card">
+                    <h3>Your Profile</h3>
+                    <form>
+                        <div class="form-group">
+                            <label for="skills">Skills (comma separated)</label>
+                            <input type="text" id="skills" placeholder="e.g. machine learning, python">
+                        </div>
+                        <div class="form-group">
+                            <label for="interests">Interests (comma separated)</label>
+                            <input type="text" id="interests" placeholder="e.g. fintech, health, analytics">
+                        </div>
+                        <div class="form-group">
+                            <label for="academic-year">Academic Year</label>
+                            <select id="academic-year">
+                                <option>Undergraduate</option>
+                                <option>Graduate</option>
+                                <option>Post-Graduate</option>
+                            </select>
+                        </div>
+                        <div class="button-group">
+                            <button class="btn btn-primary">Update & Rank</button>
+                            <button class="btn btn-secondary" type="reset">Reset</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="sidebar-card">
+                    <h3>Filters</h3>
+                    <form>
+                        <div class="form-group">
+                            <label for="location">Location</label>
+                            <input type="text" id="location" placeholder="e.g. Remote, Bangalore">
+                        </div>
+                        <div class="form-group">
+                            <label for="sort-by">Sort by</label>
+                            <select id="sort-by">
+                                <option>Relevance</option>
+                                <option>Stipend (High to Low)</option>
+                                <option>Date Posted</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-primary" style="width:100%; margin-top: 10px;">Apply Filters</button>
+                    </form>
+                </div>
+                 <div class="sidebar-card">
+                    <h3>Saved Internships</h3>
+                    <ul id="saved-internships-list">
+                        </ul>
+                </div>
+            </aside>
+
+            <section class="internships-feed">
+                <div class="feed-header">
+                    <div class="feed-tabs">
+                        <button class="active">Recommended</button>
+                        <button>All</button>
+                        <button>Applied</button>
+                    </div>
+                    <div class="feed-actions">
+                         <p class="feed-info">Showing <span>9 matches</span> • Top results are AI-ranked by relevance</p>
+                         <button id="launch-interview-btn" class="btn btn-primary">
+                             <i class="fa-solid fa-user-tie"></i> AI Mock Interview
+                         </button>
+                    </div>
+                </div>
+
+                <div class="internship-grid">
+                    <div class="internship-card" data-title="AI/ML Intern at LinkedIn">
+                        <div class="card-header">
+                            <div>
+                                <h4>AI/ML Intern</h4>
+                                <p class="company">LinkedIn</p>
+                            </div>
+                            <i class="fa-regular fa-bookmark save-icon"></i>
+                        </div>
+                        <div class="card-tags">
+                            <span class="tag tag-ai">Machine Learning</span>
+                            <span class="tag tag-data">Python</span>
+                            <span class="tag tag-data">Data Analysis</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="stipend">
+                                ₹25,000 /month
+                                <span class="location">Bangalore, India • On-site</span>
+                            </div>
+                            <a href="#" class="btn-view">View</a>
+                        </div>
+                    </div>
+
+                    <div class="internship-card" data-title="Data Science Intern at Internshala">
+                        <div class="card-header">
+                            <div>
+                                <h4>Data Science Intern</h4>
+                                <p class="company">Internshala</p>
+                            </div>
+                            <i class="fa-regular fa-bookmark save-icon"></i>
+                        </div>
+                        <div class="card-tags">
+                            <span class="tag tag-data">SQL</span>
+                            <span class="tag tag-ai">Analytics</span>
+                            <span class="tag tag-web">Tableau</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="stipend">
+                                ₹15,000 /month
+                                <span class="location">Remote</span>
+                            </div>
+                            <a href="#" class="btn-view">View</a>
+                        </div>
+                    </div>
+
+                     <div class="internship-card" data-title="AI Research Intern at Google AI">
+                        <div class="card-header">
+                            <div>
+                                <h4>AI Research Intern</h4>
+                                <p class="company">Google AI</p>
+                            </div>
+                            <i class="fa-regular fa-bookmark save-icon"></i>
+                        </div>
+                        <div class="card-tags">
+                            <span class="tag tag-ai">TensorFlow</span>
+                            <span class="tag tag-ai">Research</span>
+                            <span class="tag tag-data">Python</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="stipend">
+                                ₹40,000 /month
+                                <span class="location">Hyderabad, India • Hybrid</span>
+                            </div>
+                            <a href="#" class="btn-view">View</a>
+                        </div>
+                    </div>
+                    
+                    <div class="internship-card" data-title="Generative AI Intern at SynthAI">
+                        <div class="card-header">
+                            <div>
+                                <h4>Generative AI Intern</h4>
+                                <p class="company">SynthAI</p>
+                            </div>
+                            <i class="fa-regular fa-bookmark save-icon"></i>
+                        </div>
+                        <div class="card-tags">
+                            <span class="tag tag-genai">LLMs</span>
+                            <span class="tag tag-genai">PyTorch</span>
+                            <span class="tag tag-ai">NLP</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="stipend">
+                                ₹35,000 /month
+                                <span class="location">Remote</span>
+                            </div>
+                            <a href="#" class="btn-view">View</a>
+                        </div>
+                    </div>
+
+                    <div class="internship-card" data-title="Robotics Intern at AeroBotix">
+                        <div class="card-header">
+                            <div>
+                                <h4>Robotics Intern</h4>
+                                <p class="company">AeroBotix</p>
+                            </div>
+                            <i class="fa-regular fa-bookmark save-icon"></i>
+                        </div>
+                        <div class="card-tags">
+                            <span class="tag tag-robotics">ROS</span>
+                            <span class="tag tag-robotics">C++</span>
+                            <span class="tag tag-cv">SLAM</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="stipend">
+                                ₹28,000 /month
+                                <span class="location">Mumbai, India • On-site</span>
+                            </div>
+                            <a href="#" class="btn-view">View</a>
+                        </div>
+                    </div>
+
+                    <div class="internship-card" data-title="Computer Vision Intern at VisionWorks">
+                        <div class="card-header">
+                            <div>
+                                <h4>Computer Vision Intern</h4>
+                                <p class="company">VisionWorks</p>
+                            </div>
+                            <i class="fa-regular fa-bookmark save-icon"></i>
+                        </div>
+                        <div class="card-tags">
+                            <span class="tag tag-cv">OpenCV</span>
+                            <span class="tag tag-ai">Deep Learning</span>
+                            <span class="tag tag-data">Python</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="stipend">
+                                ₹30,000 /month
+                                <span class="location">Bangalore, India • Hybrid</span>
+                            </div>
+                            <a href="#" class="btn-view">View</a>
+                        </div>
+                    </div>
+
+                     <div class="internship-card" data-title="Product Analyst Intern at TechGen">
+                        <div class="card-header">
+                            <div>
+                                <h4>Product Analyst Intern</h4>
+                                <p class="company">TechGen Solutions</p>
+                            </div>
+                            <i class="fa-regular fa-bookmark save-icon"></i>
+                        </div>
+                        <div class="card-tags">
+                            <span class="tag tag-data">Analytics</span>
+                            <span class="tag tag-data">SQL</span>
+                            <span class="tag tag-web">Product</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="stipend">
+                                ₹18,000 /month
+                                <span class="location">Remote</span>
+                            </div>
+                            <a href="#" class="btn-view">View</a>
+                        </div>
+                    </div>
+
+                     <div class="internship-card" data-title="Web Dev Intern at CodeWave">
+                        <div class="card-header">
+                            <div>
+                                <h4>Web Dev Intern</h4>
+                                <p class="company">CodeWave</p>
+                            </div>
+                            <i class="fa-regular fa-bookmark save-icon"></i>
+                        </div>
+                        <div class="card-tags">
+                            <span class="tag tag-web">JavaScript</span>
+                            <span class="tag tag-web">React</span>
+                            <span class="tag tag-web">Node.js</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="stipend">
+                                ₹12,000 /month
+                                <span class="location">Pune, India • On-site</span>
+                            </div>
+                            <a href="#" class="btn-view">View</a>
+                        </div>
+                    </div>
+                    
+                    <div class="internship-card" data-title="UX Design Intern at Innovate Labs">
+                        <div class="card-header">
+                            <div>
+                                <h4>UX Design Intern</h4>
+                                <p class="company">Innovate Labs</p>
+                            </div>
+                            <i class="fa-regular fa-bookmark save-icon"></i>
+                        </div>
+                        <div class="card-tags">
+                            <span class="tag tag-web">Figma</span>
+                            <span class="tag tag-web">UI/UX</span>
+                            <span class="tag tag-ai">User Research</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="stipend">
+                                ₹20,000 /month
+                                <span class="location">Remote</span>
+                            </div>
+                            <a href="#" class="btn-view">View</a>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div id="assistant-modal-backdrop" class="">
+        <div id="virtual-assistant-container" class="w-full max-w-2xl mx-auto bg-white rounded-2xl shadow-2xl flex flex-col" style="height: 80vh; min-height: 600px;">
+            <div id="chat-header" class="p-4 rounded-t-2xl text-white flex items-center justify-between" style="background: linear-gradient(to right, #D946EF, #EC4899);">
+                <div class="flex items-center">
+                    <div class="relative">
+                        <i id="header-icon" class="fas fa-user-tie text-2xl"></i>
+                        <span id="online-indicator" class="absolute bottom-0 right-0 block h-2.5 w-2.5 rounded-full bg-yellow-400 ring-2 ring-white"></span>
+                    </div>
+                    <div class="ml-3">
+                        <p id="header-title" class="font-bold">Mock Interview Coach</p>
+                        <p id="header-subtitle" class="text-xs">Interview in progress...</p>
+                    </div>
+                </div>
+                 <button id="close-assistant-btn" class="text-white hover:text-gray-200">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <div id="message-container" class="flex-1 p-4 space-y-4 overflow-y-auto message-container">
+                 </div>
+
+            <div class="p-4 border-t border-gray-200 flex items-center">
+                <input id="chat-input" type="text" placeholder="Type your message..." class="w-full px-4 py-2 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
+                <button id="send-btn" class="ml-3 text-blue-500 hover:text-blue-600 disabled:text-gray-300">
+                    <i class="fas fa-paper-plane text-xl"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- HOMEPAGE SCRIPT ---
+            // Tab functionality
+            const feedTabs = document.querySelectorAll('.feed-tabs button');
+            feedTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    feedTabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                });
+            });
+
+            const navLinks = document.querySelectorAll('.header-nav-link');
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    link.classList.add('active');
+                });
+            });
+
+            // Save internship functionality
+            const saveIcons = document.querySelectorAll('.save-icon');
+            const savedList = document.getElementById('saved-internships-list');
+            const savedInternships = new Set();
+
+            saveIcons.forEach(icon => {
+                icon.addEventListener('click', () => {
+                    const card = icon.closest('.internship-card');
+                    const title = card.dataset.title;
+
+                    if (savedInternships.has(title)) {
+                        // Unsave it
+                        savedInternships.delete(title);
+                        icon.classList.remove('saved');
+                        icon.classList.replace('fa-solid', 'fa-regular');
+                    } else {
+                        // Save it
+                        savedInternships.add(title);
+                        icon.classList.add('saved');
+                        icon.classList.replace('fa-regular', 'fa-solid');
+                    }
+                    
+                    updateSavedList();
+                });
+            });
+            
+            function updateSavedList() {
+                savedList.innerHTML = ''; // Clear the list
+                if (savedInternships.size === 0) {
+                     savedList.innerHTML = '<li style="color: #888;">No internships saved yet.</li>';
+                } else {
+                    savedInternships.forEach(title => {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = title;
+                        savedList.appendChild(listItem);
+                    });
+                }
+            }
+
+            // Initialize the saved list view
+            updateSavedList();
+            
+            // --- MOCK INTERVIEW SCRIPT ---
+            const launchInterviewBtn = document.getElementById('launch-interview-btn');
+            const assistantModal = document.getElementById('assistant-modal-backdrop');
+            const closeAssistantBtn = document.getElementById('close-assistant-btn');
+            const messageContainer = document.getElementById('message-container');
+            const chatInput = document.getElementById('chat-input');
+            const sendBtn = document.getElementById('send-btn');
+            
+            // --- Gemini API Configuration ---
+            // IMPORTANT: Replace "YOUR_API_KEY" with your actual Google AI Gemini API key.
+            const apiKey = "AIzaSyCC35WRw4yIZ9F4sDf8z2E7__bLJTnzLS4"; 
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`;
+
+            async function callGemini(prompt) {
+                const payload = { contents: [{ parts: [{ text: prompt }] }] };
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    if (!response.ok) throw new Error(`API call failed: ${response.status}`);
+                    const result = await response.json();
+                    return result.candidates[0].content.parts[0].text;
+                } catch (error) {
+                    console.error("Gemini API Error:", error);
+                    return "Sorry, I'm having trouble connecting to my AI brain. Please check the API key and try again.";
+                }
+            }
+            
+            // State Management for Chatbot
+            let interviewState = {
+                active: false,
+                jobDescription: null,
+                conversationHistory: []
+            };
+
+            // AI Chatbot Logic
+            function addMessage(sender, text) {
+                const messageEl = document.createElement('div');
+                const timestamp = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+                const iconClass = sender === 'ai' ? 'fa-user-tie' : 'fa-user'; // AI is the interviewer
+                const containerClasses = sender === 'ai' ? 'flex items-start gap-3' : 'flex items-start gap-3 flex-row-reverse';
+                const bubbleClasses = sender === 'ai' ? 'bg-gray-100 rounded-tl-none' : 'bg-blue-500 text-white rounded-tr-none';
+                const timeClasses = sender === 'ai' ? '' : 'text-right';
+
+                messageEl.innerHTML = `
+                    <div class="${containerClasses}">
+                        <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center flex-shrink-0">
+                            <i class="fas ${iconClass} text-gray-500"></i>
+                        </div>
+                        <div>
+                            <div class="p-3 rounded-lg ${bubbleClasses}">
+                                <p class="text-sm">${text.replace(/\n/g, '<br>')}</p>
+                            </div>
+                            <p class="text-xs text-gray-400 mt-1 ${timeClasses}">${timestamp}</p>
+                        </div>
+                    </div>`;
+                messageContainer.appendChild(messageEl);
+                messageContainer.scrollTop = messageContainer.scrollHeight;
+            }
+
+            function showTypingIndicator() {
+                const typingEl = document.createElement('div');
+                typingEl.id = 'typing-indicator';
+                typingEl.innerHTML = `
+                    <div class="flex items-start gap-3">
+                        <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-user-tie text-gray-500"></i>
+                        </div>
+                        <div class="bg-gray-100 p-3 rounded-lg rounded-tl-none typing-indicator">
+                            <span class="w-2 h-2 bg-gray-400 rounded-full inline-block"></span>
+                            <span class="w-2 h-2 bg-gray-400 rounded-full inline-block"></span>
+                            <span class="w-2 h-2 bg-gray-400 rounded-full inline-block"></span>
+                        </div>
+                    </div>`;
+                messageContainer.appendChild(typingEl);
+                messageContainer.scrollTop = messageContainer.scrollHeight;
+            }
+
+            function hideTypingIndicator() {
+                const typingEl = document.getElementById('typing-indicator');
+                if (typingEl) typingEl.remove();
+            }
+
+            async function handleSendMessage() {
+                if (apiKey === "AIzaSyCC35WRw4yIZ9F4sDf8z2E7__bLJTnzLS4" || !apiKey) {
+                    addMessage('ai', "It looks like the API key is missing. Please add your key to the code to enable the AI Interviewer.");
+                    return;
+                }
+                const text = chatInput.value.trim();
+                if (text === '') return;
+                addMessage('user', text);
+                chatInput.value = '';
+                showTypingIndicator();
+                
+                const userTextLower = text.toLowerCase();
+                let aiResponse = '';
+
+                if (userTextLower.includes('end interview') || userTextLower.includes('stop')) {
+                    const endPrompt = `The user has ended the mock interview. Provide a brief, encouraging feedback summary based on the conversation: ${JSON.stringify(interviewState.conversationHistory)}. Conclude by saying they can close the window.`;
+                    aiResponse = await callGemini(endPrompt);
+                    // Disable input after interview ends
+                    chatInput.disabled = true;
+                    sendBtn.disabled = true;
+                } else if (!interviewState.jobDescription) {
+                    interviewState.jobDescription = text;
+                    interviewState.conversationHistory.push({ role: 'user', parts: [{ text: `(JD: ${text})` }] });
+                    const startPrompt = `You are a professional interviewer for the role: "${text}". Start the mock interview by introducing yourself and asking the first question.`;
+                    aiResponse = await callGemini(startPrompt);
+                    interviewState.conversationHistory.push({ role: 'model', parts: [{ text: aiResponse }] });
+                } else {
+                    interviewState.conversationHistory.push({ role: 'user', parts: [{ text }] });
+                    const interviewPrompt = `Continue the mock interview for role: "${interviewState.jobDescription}". History: ${JSON.stringify(interviewState.conversationHistory)}. Ask the next logical question.`;
+                    aiResponse = await callGemini(interviewPrompt);
+                    interviewState.conversationHistory.push({ role: 'model', parts: [{ text: aiResponse }] });
+                }
+                hideTypingIndicator();
+                addMessage('ai', aiResponse);
+            }
+            
+            function startInterview() {
+                // Reset state every time the modal opens
+                interviewState = { active: true, jobDescription: null, conversationHistory: [] };
+                messageContainer.innerHTML = ''; // Clear previous chat
+                chatInput.disabled = false;
+                sendBtn.disabled = false;
+                chatInput.value = '';
+
+                assistantModal.classList.add('visible');
+                addMessage('ai', "Welcome to your Mock Interview! To begin, please paste the job description for the role you're practicing for.");
+            }
+
+            function closeInterview() {
+                assistantModal.classList.remove('visible');
+            }
+            
+            launchInterviewBtn.addEventListener('click', startInterview);
+            closeAssistantBtn.addEventListener('click', closeInterview);
+            sendBtn.addEventListener('click', handleSendMessage);
+            chatInput.addEventListener('keypress', (e) => { if(e.key === 'Enter') handleSendMessage(); });
+        });
+    </script>
+</body>
+</html>
+

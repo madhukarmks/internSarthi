@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Internship Finder - Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        .progress-bar-bg {
+            background-color: #e9ecef;
+        }
+        .progress-bar {
+            background-color: #3b82f6;
+        }
+        
+        /* --- Styles for Draggable Button & Mock Interview Modal --- */
+        #launch-interview-container {
+            position: absolute;
+            top: 110px; /* Initial position */
+            right: 40px; /* Initial position */
+            cursor: grab;
+            z-index: 998;
+        }
+
+        #launch-interview-container.dragging {
+            cursor: grabbing;
+            opacity: 0.8;
+            transform: scale(1.05);
+        }
+
+        #assistant-modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #assistant-modal-backdrop.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        #virtual-assistant-container {
+             transition: transform 0.3s ease, opacity 0.3s ease;
+             transform: scale(0.95);
+             opacity: 0;
+        }
+        #assistant-modal-backdrop.visible #virtual-assistant-container {
+             transform: scale(1);
+             opacity: 1;
+        }
+        .message-container {
+            scroll-behavior: smooth;
+        }
+        .typing-indicator span {
+            animation: bounce 1.4s infinite ease-in-out both;
+        }
+        .typing-indicator span:nth-child(1) { animation-delay: -0.32s; }
+        .typing-indicator span:nth-child(2) { animation-delay: -0.16s; }
+        @keyframes bounce {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1.0); }
+        }
+                body {
+            font-family: 'Inter', sans-serif;
+        
+        }
+        /* Keyframe animation for the button pulse */
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
+            }
+        }
+        /* Class to apply the animation */
+        .animate-pulse-custom {
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <header class="bg-white shadow-sm fixed top-0 left-0 right-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center space-x-4">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-8 h-8 bg-blue-600 flex items-center justify-center rounded-md text-white font-bold">
+                            <i class="fas fa-search-location"></i>
+                        </div>
+                       
+                        <span class="text-xl font-bold text-gray-900">internSarthi</span>
+
+                    </div>
+                     <nav class="hidden md:flex items-center space-x-6 ml-6">
+                        <a href="#" class="text-blue-600 font-semibold border-b-2 border-blue-600 pb-1">Dashboard</a>
+                        <a href="browse.html" class="text-gray-500 hover:text-gray-900 font-medium">Browse Internships</a>
+                        <a href="profile.html" class="text-gray-500 hover:text-gray-900 font-medium">My Profile</a>
+                        <a href="all.html" class="text-gray-500 hover:text-gray-900 font-medium">Applications</a>
+                        <a href="govern.html" class="text-gray-500 hover:text-gray-900 font-medium">Govern Internships</a>
+                        <a href="hm.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">intern</a>
+                        
+
+                    </nav>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="text-gray-500 hover:text-gray-900"><i class="fas fa-bell text-xl"></i></button>
+                     <div class="flex items-center space-x-2">
+                        <img src="https://i.pravatar.cc/40?u=sarahchen" alt="Sarah Chen" class="w-9 h-9 rounded-full">
+                        <span class="font-semibold text-gray-700 hidden sm:block">Sarah Chen</span>
+                         <body class="text-gray-800 p-10 flex justify-center items-center h-screen">
+
+    <!-- The extracted four-dot menu component -->
+    <div class="relative ml-6">
+        <!-- Tooltip -->
+        <div id="tooltip" class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 bg-gray-800 text-white text-sm rounded-md shadow-lg whitespace-nowrap">
+            Try it!
+            <div class="absolute left-1/2 -translate-x-1/2 top-full w-0 h-0 border-x-8 border-x-transparent border-t-8 border-t-gray-800"></div>
+        </div>
+        
+        <button id="menu-button" class="text-gray-500 hover:text-gray-900 focus:outline-none bg-white p-3 rounded-full animate-pulse-custom">
+            <!-- The user referred to a "four-dot" icon, but the code uses a 3x3 grid (fa-th). This matches the visual. -->
+            <i class="fas fa-th text-xl"></i>
+        </button>
+
+        <div id="menu-dropdown" class="hidden absolute left-0 mt-2 w-48 bg-white rounded-md shadow-xl z-20">
+            <a href="setting.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                Settings</a>
+            <a href="dashboard.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"><img src="kk.png" alt="">intern dashboard</a>
+            <a href="profiles.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"><img src="profile.jpg" alt="">Profile update</a>
+            <a href="gover.html" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100"><img src="parlia.jpg" alt="">Government Internship</a>
+            <a href="feed.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"><img src="feed.png" alt="">Send Feedback</a>
+
+        </div>
+    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="pt-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-900">Welcome back, Sarah!</h1>
+            <p class="text-gray-600 mt-1">Here's your personalized internship dashboard</p>
+            
+        </div>
+          
+
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div class="bg-white p-6 rounded-xl shadow-sm flex flex-col items-center text-center">
+                <i class="fas fa-user-check text-3xl text-blue-500 mb-3"></i>
+                <p class="text-3xl font-bold text-gray-900">85%</p>
+                <p class="text-gray-500">Profile Completeness</p>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-sm flex flex-col items-center text-center">
+                <i class="fas fa-paper-plane text-3xl text-green-500 mb-3"></i>
+                <p class="text-3xl font-bold text-gray-900">12</p>
+                <p class="text-gray-500">Applications Sent</p>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-sm flex flex-col items-center text-center">
+                <i class="fas fa-calendar-check text-3xl text-purple-500 mb-3"></i>
+                <p class="text-3xl font-bold text-gray-900">3</p>
+                <p class="text-gray-500">Interview Invites</p>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-sm flex flex-col items-center text-center">
+                <i class="fas fa-bullseye text-3xl text-red-500 mb-3"></i>
+                <p class="text-3xl font-bold text-gray-900">92%</p>
+                <p class="text-gray-500">Match Score</p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- AI-Recommended Internships -->
+            <div class="lg:col-span-2 bg-white p-6 rounded-xl shadow-sm">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-bold flex items-center"><i class="fas fa-robot text-blue-500 mr-2"></i>AI-Recommended Internships</h2>
+                    <a href="#" class="text-blue-600 font-semibold text-sm">View All</a>
+                </div>
+                <div class="space-y-4">
+                    <!-- Machine Learning Engineer -->
+                     <div class="border p-4 rounded-lg">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="font-bold text-lg">Machine Learning Engineer</h3>
+                                <p class="text-gray-600">DataDriven Inc.</p>
+                                <div class="text-sm text-gray-500 flex items-center space-x-4 mt-2">
+                                    <span><i class="fas fa-map-marker-alt mr-1"></i> Palo Alto, CA</span>
+                                    <span><i class="fas fa-clock mr-1"></i> 6 months</span>
+                                    <span class="bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full">Full-time</span>
+                                </div>
+                                <div class="flex space-x-2 mt-2">
+                                    <span class="text-xs bg-gray-200 px-2 py-1 rounded-full">Python</span>
+                                    <span class="text-xs bg-gray-200 px-2 py-1 rounded-full">TensorFlow</span>
+                                    <span class="text-xs bg-gray-200 px-2 py-1 rounded-full">Scikit-learn</span>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="font-bold text-green-600">98% Match</p>
+                                <div class="w-24 h-2 rounded-full progress-bar-bg mt-1"><div class="h-2 rounded-full progress-bar" style="width: 98%;"></div></div>
+                                <button class="mt-4 bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700 transition">Apply Now</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- AI Research Scientist -->
+                    <div class="border p-4 rounded-lg">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="font-bold text-lg">AI Research Scientist</h3>
+                                <p class="text-gray-600">Future AI Labs</p>
+                                <div class="text-sm text-gray-500 flex items-center space-x-4 mt-2">
+                                    <span><i class="fas fa-map-marker-alt mr-1"></i> Remote</span>
+                                    <span><i class="fas fa-clock mr-1"></i> 4 months</span>
+                                    <span class="bg-green-100 text-green-800 px-2 py-0.5 rounded-full">Part-time</span>
+                                </div>
+                                <div class="flex space-x-2 mt-2">
+                                    <span class="text-xs bg-gray-200 px-2 py-1 rounded-full">Research</span>
+                                    <span class="text-xs bg-gray-200 px-2 py-1 rounded-full">PyTorch</span>
+                                    <span class="text-xs bg-gray-200 px-2 py-1 rounded-full">Algorithms</span>
+                                </div>
+                            </div>
+                             <div class="text-right">
+                                <p class="font-bold text-orange-500">95% Match</p>
+                                <div class="w-24 h-2 rounded-full progress-bar-bg mt-1"><div class="h-2 rounded-full progress-bar" style="width: 95%; background-color: #f97316;"></div></div>
+                                <button class="mt-4 bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700 transition">Apply Now</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Web Developer Intern -->
+                    <div class="border p-4 rounded-lg">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="font-bold text-lg">Web Developer Intern</h3>
+                                <p class="text-gray-600">Web Weavers Agency</p>
+                                <div class="text-sm text-gray-500 flex items-center space-x-4 mt-2">
+                                    <span><i class="fas fa-map-marker-alt mr-1"></i> New York, NY</span>
+                                    <span><i class="fas fa-clock mr-1"></i> 3 months</span>
+                                    <span class="bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded-full">Hybrid</span>
+                                </div>
+                                <div class="flex space-x-2 mt-2">
+                                    <span class="text-xs bg-gray-200 px-2 py-1 rounded-full">HTML/CSS</span>
+                                    <span class="text-xs bg-gray-200 px-2 py-1 rounded-full">JavaScript</span>
+                                    <span class="text-xs bg-gray-200 px-2 py-1 rounded-full">React</span>
+                                </div>
+                            </div>
+                             <div class="text-right">
+                                <p class="font-bold text-green-600">88% Match</p>
+                                <div class="w-24 h-2 rounded-full progress-bar-bg mt-1"><div class="h-2 rounded-full progress-bar" style="width: 88%;"></div></div>
+                                <button class="mt-4 bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700 transition">Apply Now</button>
+                            </div>
+                        </div>
+                    </div>
+                     <!-- UX Designer Intern -->
+                    <div class="border p-4 rounded-lg">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="font-bold text-lg">UX Designer Intern</h3>
+                                <p class="text-gray-600">Pixel Perfect Designs</p>
+                                <div class="text-sm text-gray-500 flex items-center space-x-4 mt-2">
+                                    <span><i class="fas fa-map-marker-alt mr-1"></i> Remote</span>
+                                    <span><i class="fas fa-clock mr-1"></i> 4 months</span>
+                                    <span class="bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full">Full-time</span>
+                                </div>
+                                <div class="flex space-x-2 mt-2">
+                                    <span class="text-xs bg-gray-200 px-2 py-1 rounded-full">Figma</span>
+                                    <span class="text-xs bg-gray-200 px-2 py-1 rounded-full">User Research</span>
+                                    <span class="text-xs bg-gray-200 px-2 py-1 rounded-full">Prototyping</span>
+                                </div>
+                            </div>
+                             <div class="text-right">
+                                <p class="font-bold text-orange-500">85% Match</p>
+                                <div class="w-24 h-2 rounded-full progress-bar-bg mt-1"><div class="h-2 rounded-full progress-bar" style="width: 85%; background-color: #f97316;"></div></div>
+                                <button class="mt-4 bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700 transition">Apply Now</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div>
+                <!-- Quick Actions -->
+                <div class="bg-white p-6 rounded-xl shadow-sm mb-8">
+                    <h2 class="text-xl font-bold mb-4">Quick Actions</h2>
+                    <div class="space-y-3">
+                        <button class="w-full text-left font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 p-3 rounded-lg transition"><i class="fas fa-user-circle w-6 mr-2"></i>Complete Profile</button>
+                        <button class="w-full text-left font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 p-3 rounded-lg transition"><i class="fas fa-search w-6 mr-2"></i>Browse Internships</button>
+                        <button class="w-full text-left font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 p-3 rounded-lg transition"><i class="fas fa-file-upload w-6 mr-2"></i>Upload Resume</button>
+                        <button id="schedule-mock-interview-btn" class="w-full text-left font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 p-3 rounded-lg transition"><i class="fas fa-comments w-6 mr-2"></i>Schedule Mock Interview</button>
+                    </div>
+                </div>
+                
+                <!-- Recent Activity -->
+                <div class="bg-white p-6 rounded-xl shadow-sm mb-8">
+                    <h2 class="text-xl font-bold mb-4">Recent Activity</h2>
+                    <ul class="space-y-4">
+                        <li class="flex items-start space-x-3">
+                            <i class="fas fa-paper-plane text-blue-500 mt-1"></i>
+                            <div>
+                                <p class="font-semibold">Applied to Product Manager Intern at Meta</p>
+                                <p class="text-sm text-gray-500">2 hours ago</p>
+                            </div>
+                        </li>
+                         <li class="flex items-start space-x-3">
+                            <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                            <div>
+                                <p class="font-semibold">Completed skills assessment</p>
+                                <p class="text-sm text-gray-500">1 day ago</p>
+                            </div>
+                        </li>
+                         <li class="flex items-start space-x-3">
+                            <i class="fas fa-user-edit text-purple-500 mt-1"></i>
+                            <div>
+                                <p class="font-semibold">Updated profile information</p>
+                                <p class="text-sm text-gray-500">3 days ago</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start space-x-3">
+                            <i class="fas fa-bookmark text-red-500 mt-1"></i>
+                            <div>
+                                <p class="font-semibold">Bookmarked 5 new internships</p>
+                                <p class="text-sm text-gray-500">1 week ago</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Career Path Suggestion -->
+                <div class="bg-purple-50 p-6 rounded-xl">
+                    <div class="flex items-start space-x-4">
+                         <i class="fas fa-route text-2xl text-purple-500"></i>
+                         <div>
+                            <h3 class="font-bold text-lg">Career Path Suggestion</h3>
+                            <p class="text-sm text-gray-600 mt-1">Your skills in Python and Analytics make you a strong candidate for a future career in Data Engineering. Consider internships that build on these strengths.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Draggable Mock Interview Button -->
+         <div id="launch-interview-container">
+            <button id="launch-interview-btn" class="w-full max-w-md text-left p-6 rounded-2xl flex items-center gap-6 transition-transform hover:scale-[1.03] shadow-lg" style="background: linear-gradient(to right, #6D28D9, #A78BFA);">
+                <i class="fas fa-user-tie text-5xl text-white"></i>
+                <div>
+                    <h3 class="text-2xl font-bold text-white">AI Mock Interview</h3>
+                    <p class="text-lg text-purple-200">Practice for your next interview</p>
+                </div>
+            </button>
+        </div>
+    </main>
+
+    <!-- Virtual Assistant Modal -->
+    <div id="assistant-modal-backdrop" class="">
+        <div id="virtual-assistant-container" class="w-full max-w-2xl mx-auto bg-white rounded-2xl shadow-2xl flex flex-col" style="height: 80vh; min-height: 600px;">
+            <div id="chat-header" class="p-4 rounded-t-2xl text-white flex items-center justify-between" style="background: linear-gradient(to right, #D946EF, #EC4899);">
+                <div class="flex items-center">
+                    <div class="relative">
+                        <i id="header-icon" class="fas fa-user-tie text-2xl"></i>
+                        <span id="online-indicator" class="absolute bottom-0 right-0 block h-2.5 w-2.5 rounded-full bg-yellow-400 ring-2 ring-white"></span>
+                    </div>
+                    <div class="ml-3">
+                        <p id="header-title" class="font-bold">Mock Interview Coach</p>
+                        <p id="header-subtitle" class="text-xs">Interview in progress...</p>
+                    </div>
+                </div>
+                 <button id="close-assistant-btn" class="text-white hover:text-gray-200">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <div id="message-container" class="flex-1 p-4 space-y-4 overflow-y-auto message-container">
+            </div>
+
+            <div class="p-4 border-t border-gray-200 flex items-center">
+                <input id="chat-input" type="text" placeholder="Type your message..." class="w-full px-4 py-2 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
+                <button id="send-btn" class="ml-3 text-blue-500 hover:text-blue-600 disabled:text-gray-300">
+                    <i class="fas fa-paper-plane text-xl"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // JavaScript for the Four-dot Menu Logic
+            const menuButton = document.getElementById('menu-button');
+            const menuDropdown = document.getElementById('menu-dropdown');
+            const tooltip = document.getElementById('tooltip');
+            let tooltipVisible = true;
+
+            menuButton.addEventListener('click', () => {
+                menuDropdown.classList.toggle('hidden');
+                // Hide the tooltip permanently after the first click
+                if (tooltipVisible) {
+                    tooltip.classList.add('hidden');
+                    tooltipVisible = false;
+                }
+            });
+            
+            // Close dropdown when clicking outside of it
+            document.addEventListener('click', (event) => {
+                if (!menuButton.contains(event.target) && !menuDropdown.contains(event.target)) {
+                    menuDropdown.classList.add('hidden');
+                }
+            });
+        });
+        document.addEventListener('DOMContentLoaded', () => {
+            const launchInterviewBtnContainer = document.getElementById('launch-interview-container');
+            const launchInterviewBtn = document.getElementById('launch-interview-btn');
+            const scheduleInterviewBtn = document.getElementById('schedule-mock-interview-btn');
+            const assistantModal = document.getElementById('assistant-modal-backdrop');
+            const closeAssistantBtn = document.getElementById('close-assistant-btn');
+            const messageContainer = document.getElementById('message-container');
+            const chatInput = document.getElementById('chat-input');
+            const sendBtn = document.getElementById('send-btn');
+            
+            // --- Gemini API Configuration ---
+            const apiKey = "PASTE_YOUR_GEMINI_API_KEY_HERE";
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+            async function callGemini(prompt) {
+                const payload = { contents: [{ parts: [{ text: prompt }] }] };
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    if (!response.ok) throw new Error(`API call failed: ${response.status}`);
+                    const result = await response.json();
+                    return result.candidates[0].content.parts[0].text;
+                } catch (error) {
+                    console.error("Gemini API Error:", error);
+                    return "Sorry, I'm having trouble connecting to my AI brain. Please check the API key and try again.";
+                }
+            }
+            
+            let interviewState = {
+                active: false,
+                jobDescription: null,
+                conversationHistory: []
+            };
+
+            function addMessage(sender, text) {
+                const messageEl = document.createElement('div');
+                const timestamp = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+                const iconClass = sender === 'ai' ? 'fa-user-tie' : 'fa-user';
+                const containerClasses = sender === 'ai' ? 'flex items-start gap-3' : 'flex items-start gap-3 flex-row-reverse';
+                const bubbleClasses = sender === 'ai' ? 'bg-gray-100 rounded-tl-none' : 'bg-blue-500 text-white rounded-tr-none';
+                const timeClasses = sender === 'ai' ? '' : 'text-right';
+
+                messageEl.innerHTML = `
+                    <div class="${containerClasses}">
+                        <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center flex-shrink-0">
+                            <i class="fas ${iconClass} text-gray-500"></i>
+                        </div>
+                        <div>
+                            <div class="p-3 rounded-lg ${bubbleClasses}">
+                                <p class="text-sm">${text}</p>
+                            </div>
+                            <p class="text-xs text-gray-400 mt-1 ${timeClasses}">${timestamp}</p>
+                        </div>
+                    </div>`;
+                messageContainer.appendChild(messageEl);
+                messageContainer.scrollTop = messageContainer.scrollHeight;
+            }
+
+            function showTypingIndicator() {
+                const typingEl = document.createElement('div');
+                typingEl.id = 'typing-indicator';
+                typingEl.innerHTML = `
+                    <div class="flex items-start gap-3">
+                        <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-user-tie text-gray-500"></i>
+                        </div>
+                        <div class="bg-gray-100 p-3 rounded-lg rounded-tl-none typing-indicator">
+                            <span class="w-2 h-2 bg-gray-400 rounded-full inline-block"></span>
+                            <span class="w-2 h-2 bg-gray-400 rounded-full inline-block"></span>
+                            <span class="w-2 h-2 bg-gray-400 rounded-full inline-block"></span>
+                        </div>
+                    </div>`;
+                messageContainer.appendChild(typingEl);
+                messageContainer.scrollTop = messageContainer.scrollHeight;
+            }
+
+            function hideTypingIndicator() {
+                const typingEl = document.getElementById('typing-indicator');
+                if (typingEl) typingEl.remove();
+            }
+
+            async function handleSendMessage() {
+                if (apiKey === "PASTE_YOUR_GEMINI_API_KEY_HERE" || !apiKey) {
+                    addMessage('ai', "It looks like the API key is missing. Please add your key to the code to enable the AI Interviewer.");
+                    return;
+                }
+                const text = chatInput.value.trim();
+                if (text === '') return;
+                addMessage('user', text);
+                chatInput.value = '';
+                showTypingIndicator();
+                
+                const userTextLower = text.toLowerCase();
+                let aiResponse = '';
+
+                if (userTextLower.includes('end interview') || userTextLower.includes('stop')) {
+                    const endPrompt = `The user has ended the mock interview. Provide a brief, encouraging feedback summary based on the conversation: ${JSON.stringify(interviewState.conversationHistory)}. Conclude by saying they can close the window.`;
+                    aiResponse = await callGemini(endPrompt);
+                    chatInput.disabled = true;
+                    sendBtn.disabled = true;
+                } else if (!interviewState.jobDescription) {
+                    interviewState.jobDescription = text;
+                    interviewState.conversationHistory.push({ role: 'user', parts: [{ text: `(JD: ${text})` }] });
+                    const startPrompt = `You are a professional interviewer for the role: "${text}". Start the mock interview by introducing yourself and asking the first question.`;
+                    aiResponse = await callGemini(startPrompt);
+                    interviewState.conversationHistory.push({ role: 'model', parts: [{ text: aiResponse }] });
+                } else {
+                    interviewState.conversationHistory.push({ role: 'user', parts: [{ text }] });
+                    const interviewPrompt = `Continue the mock interview for role: "${interviewState.jobDescription}". History: ${JSON.stringify(interviewState.conversationHistory)}. Ask the next logical question.`;
+                    aiResponse = await callGemini(interviewPrompt);
+                    interviewState.conversationHistory.push({ role: 'model', parts: [{ text: aiResponse }] });
+                }
+                hideTypingIndicator();
+                addMessage('ai', aiResponse);
+            }
+            
+            function startInterview() {
+                if(isDragging) return;
+                interviewState = { active: true, jobDescription: null, conversationHistory: [] };
+                messageContainer.innerHTML = '';
+                chatInput.disabled = false;
+                sendBtn.disabled = false;
+                assistantModal.classList.add('visible');
+                addMessage('ai', "Welcome to your Mock Interview! To begin, please paste the job description for the role you're practicing for.");
+            }
+
+            function closeInterview() {
+                assistantModal.classList.remove('visible');
+            }
+            
+            launchInterviewBtn.addEventListener('click', startInterview);
+            scheduleInterviewBtn.addEventListener('click', startInterview);
+            closeAssistantBtn.addEventListener('click', closeInterview);
+            sendBtn.addEventListener('click', handleSendMessage);
+            chatInput.addEventListener('keypress', (e) => { if(e.key === 'Enter') handleSendMessage(); });
+
+            let isDragging = false;
+            let offsetX, offsetY;
+
+            const move = (e) => {
+                if (!isDragging) return;
+                let newX = e.pageX - offsetX;
+                let newY = e.pageY - offsetY;
+                newX = Math.max(0, Math.min(newX, window.innerWidth - launchInterviewBtnContainer.offsetWidth));
+                newY = Math.max(0, Math.min(newY, window.innerHeight - launchInterviewBtnContainer.offsetHeight));
+                launchInterviewBtnContainer.style.left = `${newX}px`;
+                launchInterviewBtnContainer.style.top = `${newY}px`;
+                launchInterviewBtnContainer.style.right = 'auto';
+            };
+
+            const mouseDown = (e) => {
+                setTimeout(() => { isDragging = true; }, 150);
+                launchInterviewBtnContainer.classList.add('dragging');
+                offsetX = e.clientX - launchInterviewBtnContainer.offsetLeft;
+                offsetY = e.clientY - launchInterviewBtnContainer.offsetTop;
+                document.addEventListener('mousemove', move);
+                document.addEventListener('mouseup', mouseUp);
+            };
+
+            const mouseUp = () => {
+                const wasDragging = isDragging;
+                isDragging = false; 
+                launchInterviewBtnContainer.classList.remove('dragging');
+                document.removeEventListener('mousemove', move);
+                document.removeEventListener('mouseup', mouseUp);
+                if (wasDragging) {
+                    launchInterviewBtn.addEventListener('click', function preventClick(e) {
+                        e.stopPropagation();
+                        e.preventDefault();
+                        launchInterviewBtn.removeEventListener('click', preventClick, true);
+                    }, true);
+                }
+            };
+            
+            launchInterviewBtnContainer.addEventListener('mousedown', mouseDown);
+        });
+    </script>
+
+</body>
+</html>
+

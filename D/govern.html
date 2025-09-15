@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF--8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Government Internships & Scholarships - InternshipFinder</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #eef2f9;
+        }
+        .tab-active {
+            border-bottom: 2px solid #3b82f6;
+            color: #3b82f6;
+            background-color: #dbeafe;
+        }
+    </style>
+</head>
+<header class="bg-white shadow-sm sticky top-0 z-50"> <div class="container mx-auto px-6 py-3"> <div class="flex items-center justify-between"> <div class="flex items-center"> <div class="w-8 h-8 bg-blue-600 flex items-center justify-center rounded-md text-white font-bold text-lg"> <i class="fas fa-search-location"></i> </div> <span class="ml-3 text-xl font-bold text-gray-900">internSarthi</span> <nav class="hidden md:flex items-center space-x-6 ml-10"> <a href="das1.html" class="text-gray-600 hover:text-blue-600 font-medium">Dashboard</a> <a href="browse.html" class="text-gray-600 hover:text-blue-600 font-medium">Browse internships</a> <a href="profile.html" class="text-gray-600 hover:text-blue-600 font-medium">My profile</a> <a href="all.html" class="text-gray-600 hover:text-blue-600 font-medium">Application</a> <a href="govern.html" class="text-blue-600 font-semibold">Govern Internship</a> <a href="hm.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">intern</a></nav> </div> <div class="flex items-center space-x-4"> <div class="relative"> <span class="absolute inset-y-0 left-0 flex items-center pl-3"> <i class="fas fa-search text-gray-400"></i> </span> <input type="text" placeholder="Search..." class="w-full pl-10 pr-4 py-2 bg-gray-100 border-transparent rounded-full focus:outline-none focus:ring-2 focus:ring-blue-300 transition duration-200"> </div> <img src="https://i.pravatar.cc/40?u=sarahchen" alt="User Profile" class="w-10 h-10 rounded-full object-cover"> </div> </div> </div> </header>
+<body class="text-gray-800">
+
+    <div class="min-h-screen flex flex-col">
+
+        <!-- Main Content -->
+        <main class="flex-grow container mx-auto p-6 md:p-10">
+            <div class="max-w-6xl mx-auto">
+                <!-- Page Header -->
+                <div class="text-center mb-8">
+                    <h1 class="text-4xl font-bold text-gray-900 flex items-center justify-center">
+                        Government Internships & Scholarships <i class="fas fa-award text-green-600 ml-3"></i>
+                    </h1>
+                    <p class="text-gray-500 mt-2 text-md">
+                        Explore prestigious opportunities from various government organizations and ministries to kickstart your career in public service.
+                    </p>
+                </div>
+                
+                <!-- Tabs -->
+                <div class="mb-8 flex justify-center border-b">
+                    <button class="tab-button tab-active py-2 px-6 font-semibold flex items-center" onclick="showTab('internships')"><i class="fas fa-briefcase mr-2"></i>Internships</button>
+                    <button class="tab-button py-2 px-6 font-semibold flex items-center text-gray-600" onclick="showTab('scholarships')"><i class="fas fa-graduation-cap mr-2"></i>Scholarships</button>
+                    <button class="tab-button py-2 px-6 font-semibold flex items-center text-gray-600" onclick="showTab('fellowships')"><i class="fas fa-book-reader mr-2"></i>Fellowships</button>
+                </div>
+
+                <!-- Featured Opportunities -->
+                <div id="featured" class="mb-10">
+                    <h2 class="text-2xl font-semibold text-gray-800 mb-6">Featured Opportunities</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <!-- Card 1 -->
+                        <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                            <img src="https://i.ibb.co/zTyJL3XX/tt.webp" alt="Parliament of India" class="w-full h-48 object-cover">
+                            <div class="p-5">
+                                <h3 class="text-lg font-bold text-gray-900">Internship at Ministry of Education</h3>
+                                <p class="text-sm text-gray-600 mt-1">Gain experience in policy making and educational administration.</p>
+                            </div>
+                        </div>
+                        <!-- Card 2 -->
+                        <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                            <img src="https://i.ibb.co/GfpY6RTx/uu.jpg" alt="AICTE Building" class="w-full h-48 object-cover">
+                            <div class="p-5">
+                                <h3 class="text-lg font-bold text-gray-900">Scholarship Program by AICTE</h3>
+                                <p class="text-sm text-gray-600 mt-1">Financial support for students pursuing technical education.</p>
+                            </div>
+                        </div>
+                        <!-- Card 3 -->
+                        <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                           <img src="https://i.ibb.co/hJPrtwF9/pp.webp" alt="Emblem of India" class="w-full h-480 object-contain p-4">
+                            <div class="p-5">
+                                <h3 class="text-lg font-bold text-gray-900">Research Fellowship at DRDO</h3>
+                                <p class="text-sm text-gray-600 mt-1">Contribute to cutting-edge defense research and development.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Content Sections -->
+                <div id="internships" class="tab-content">
+                    <div class="bg-white p-8 rounded-lg shadow-md">
+                        <h2 class="text-2xl font-semibold text-gray-800 mb-6">All Internships</h2>
+                        <table class="w-full text-left">
+                            <thead>
+                                <tr class="text-gray-500 uppercase text-sm">
+                                    <th class="pb-4">Organization</th>
+                                    <th class="pb-4">Title</th>
+                                    <th class="pb-4">Description</th>
+                                    <th class="pb-4">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-t">
+                                    <td class="py-4"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/e/eb/All_India_Council_for_Technical_Education_logo.png/220px-All_India_Council_for_Technical_Education_logo.png" class="h-10 w-10 object-contain"></td>
+                                    <td>AICTE Internship Program</td>
+                                    <td>Internship opportunities in various technical fields.</td>
+                                    <td><a href="https://example.com/aicte-internship" target="_blank" class="text-blue-600 font-semibold">View Details</a></td>
+                                </tr>
+                                <tr class="border-t">
+                                    <td class="py-4"><img src="https://i.ibb.co/hJPrtwF9/pp.webp" class="h-10 w-10 object-contain"></td>
+                                    <td>DRDO Summer Internship</td>
+                                    <td>Hands-on experience in defense research.</td>
+                                    <td><a href="https://example.com/drdo-internship" target="_blank" class="text-blue-600 font-semibold">View Details</a></td>
+                                </tr>
+                                <tr class="border-t">
+                                     <td class="py-4"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/SBI-logo.svg/1024px-SBI-logo.svg.png" class="h-10 w-10 object-contain"></td>
+                                    <td>SBI Internship Program</td>
+                                    <td>Internship program in banking and finance.</td>
+                                    <td><a href="https://example.com/sbi-internship" target="_blank" class="text-blue-600 font-semibold">View Details</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="scholarships" class="tab-content hidden">
+                     <div class="bg-white p-8 rounded-lg shadow-md">
+                        <h2 class="text-2xl font-semibold text-gray-800 mb-6">All Scholarships</h2>
+                        <table class="w-full text-left">
+                           <thead>
+                                <tr class="text-gray-500 uppercase text-sm">
+                                    <th class="pb-4">Organization</th>
+                                    <th class="pb-4">Title</th>
+                                    <th class="pb-4">Description</th>
+                                    <th class="pb-4">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-t">
+                                     <td class="py-4"><img src="https://i.ibb.co/jvKMcWG9/kk.png" class="h-10 w-10 object-contain"></td>
+                                    <td>National Scholarship Portal</td>
+                                    <td>A single portal for various scholarships from central and state governments.</td>
+                                    <td><a href="https://example.com/nsp" target="_blank" class="text-blue-600 font-semibold">View Details</a></td>
+                                </tr>
+                                <tr class="border-t">
+                                     <td class="py-4"><img src="https://i.ibb.co/BKfM5VbL/vv.jpg" class="h-10 w-10 object-contain"></td>
+                                    <td>UGC Scholarships</td>
+                                    <td>Multiple scholarship schemes for higher education students by UGC.</td>
+                                    <td><a href="https://example.com/ugc-scholarships" target="_blank" class="text-blue-600 font-semibold">View Details</a></td>
+                                </tr>
+                                 <tr class="border-t">
+                                    <td class="py-4"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/e/eb/All_India_Council_for_Technical_Education_logo.png/220px-All_India_Council_for_Technical_Education_logo.png" class="h-10 w-10 object-contain"></td>
+                                    <td>AICTE Pragati Scholarship</td>
+                                    <td>Scholarship for girl students pursuing technical education.</td>
+                                    <td><a href="https://example.com/aicte-pragati" target="_blank" class="text-blue-600 font-semibold">View Details</a></td>
+                                </tr>
+                                <tr class="border-t">
+                                    <td class="py-4"><img src="https://i.ibb.co/Lzyz0sxX/bb.jpg" class="h-10 w-10 object-contain"></td>
+                                    <td>Merit-cum-Means Scholarship</td>
+                                    <td>For meritorious students from minority communities.</td>
+                                    <td><a href="https://example.com/mcm-scholarship" target="_blank" class="text-blue-600 font-semibold">View Details</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                 <div id="fellowships" class="tab-content hidden">
+                     <div class="bg-white p-8 rounded-lg shadow-md">
+                        <h2 class="text-2xl font-semibold text-gray-800 mb-6">All Fellowships</h2>
+                        <table class="w-full text-left">
+                           <thead>
+                                <tr class="text-gray-500 uppercase text-sm">
+                                    <th class="pb-4">Organization</th>
+                                    <th class="pb-4">Title</th>
+                                    <th class="pb-4">Description</th>
+                                    <th class="pb-4">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-t">
+                                     <td class="py-4"><img src="https://i.ibb.co/q3DvD6fS/mmm.png" class="h-10 w-10 object-contain"></td>
+                                    <td>SERB-DST Fellowship</td>
+                                    <td>For young scientists to pursue research in frontier areas of science.</td>
+                                    <td><a href="https://example.com/serb-dst" target="_blank" class="text-blue-600 font-semibold">View Details</a></td>
+                                </tr>
+                                <tr class="border-t">
+                                     <td class="py-4"><img src="https://i.ibb.co/3md0L5wD/lll.webp" class="h-10 w-10 object-contain"></td>
+                                    <td>ICSSR Doctoral Fellowship</td>
+                                    <td>Supporting Ph.D. scholars in the field of social sciences.</td>
+                                    <td><a href="https://example.com/icssr-fellowship" target="_blank" class="text-blue-600 font-semibold">View Details</a></td>
+                                </tr>
+                                 <tr class="border-t">
+                                    <td class="py-4"><img src="https://i.ibb.co/ZzDB12Rv/csir.jpg" class="h-10 w-10 object-contain"></td>
+                                    <td>CSIR-Nehru Fellowship</td>
+                                    <td>Postdoctoral research fellowship in science and technology fields.</td>
+                                    <td><a href="https://example.com/csir-nehru" target="_blank" class="text-blue-600 font-semibold">View Details</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-white mt-10 border-t">
+            <div class="container mx-auto px-6 py-4">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <div class="flex items-center">
+                         <div class="w-8 h-8 bg-blue-600 flex items-center justify-center rounded-md text-white font-bold text-lg">
+                           <i class="fas fa-search-location"></i>
+                        </div>
+                        <span class="ml-3 text-xl font-bold text-gray-900">internSarthi</span>
+                    </div>
+                    <div class="flex space-x-6 mt-4 md:mt-0 text-sm">
+                        <a href="https://example.com/about" class="text-gray-500 hover:text-gray-900">About</a>
+                        <a href="https://example.com/contact" class="text-gray-500 hover:text-gray-900">Contact</a>
+                        <a href="https://example.com/privacy" class="text-gray-500 hover:text-gray-900">Privacy Policy</a>
+                    </div>
+                    <p class="text-gray-500 mt-4 md:mt-0 text-sm">&copy; 2025 internSarthi. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        function showTab(tabName) {
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => {
+                if (tab.id === tabName) {
+                    tab.classList.remove('hidden');
+                } else {
+                    tab.classList.add('hidden');
+                }
+            });
+
+            const buttons = document.querySelectorAll('.tab-button');
+            buttons.forEach(button => button.classList.remove('tab-active'));
+
+            const activeButton = document.querySelector(`.tab-button[onclick="showTab('${tabName}')"]`);
+            activeButton.classList.add('tab-active');
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browse Internships - InternshipFinder</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        .progress-bar-bg {
+            background-color: #e9ecef;
+        }
+        .progress-bar {
+            background-color: #22c55e;
+        }
+
+        /* --- Chatbot Styles --- */
+        #chat-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+        }
+        #chat-widget {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            z-index: 1000;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: bottom right;
+        }
+         #chat-widget.hidden {
+            transform: scale(0.5);
+            opacity: 0;
+            pointer-events: none;
+        }
+        .message-container {
+            scroll-behavior: smooth;
+        }
+
+        .typing-indicator span {
+            animation: bounce 1.4s infinite ease-in-out both;
+        }
+        .typing-indicator span:nth-child(1) { animation-delay: -0.32s; }
+        .typing-indicator span:nth-child(2) { animation-delay: -0.16s; }
+        @keyframes bounce {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1.0); }
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <header class="bg-white shadow-sm fixed top-0 left-0 right-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center space-x-4">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-8 h-8 bg-blue-600 flex items-center justify-center rounded-md text-white font-bold">
+                            <i class="fas fa-search-location"></i>
+                        </div>
+                        <span class="text-xl font-bold text-gray-900">internSarthi</span>
+                    </div>
+                     <nav class="hidden md:flex items-center space-x-6 ml-6">
+                        <a href="das1.html" class="text-gray-500 hover:text-gray-900 font-medium">Dashboard</a>
+                        <a href="#" class="text-blue-600 font-semibold border-b-2 border-blue-600 pb-1">Browse Internships</a>
+                        <a href="profile.html" class="text-gray-500 hover:text-gray-900 font-medium">My Profile</a>
+                        <a href="all.html" class="text-gray-500 hover:text-gray-900 font-medium">Applications</a>
+                        <a href="govern.html" class="text-gray-500 hover:text-gray-900 font-medium">Govern Internship</a>
+                        <a href="hm.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">intern</a>
+
+
+                    </nav>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="text-gray-500 hover:text-gray-900"><i class="fas fa-bell text-xl"></i></button>
+                     <div class="flex items-center space-x-2">
+                        <img src="https://i.pravatar.cc/40?u=sarahchen" alt="Sarah Chen" class="w-9 h-9 rounded-full">
+                        <span class="font-semibold text-gray-700 hidden sm:block">Sarah Chen</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="pt-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center mb-8">
+            <div>
+                <h1 class="text-3xl font-bold text-gray-900">Browse Internships</h1>
+                <p class="text-gray-600 mt-1">Discover AI-matched product management internships</p>
+            </div>
+             <a href="ca.html" class="bg-blue-600 text-white font-semibold py-2 px-5 rounded-lg hover:bg-blue-700 transition flex items-center">
+                <i class="fas fa-plus mr-2"></i> Post an Internship
+            </a>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            <!-- Filters Column -->
+            <aside class="lg:col-span-1">
+                <div class="bg-white p-6 rounded-xl shadow-sm">
+                    <h2 class="text-xl font-bold mb-4">Filters</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <label for="search" class="sr-only">Search</label>
+                            <div class="relative">
+                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="fas fa-search text-gray-400"></i>
+                                </div>
+                                <input type="text" id="search" placeholder="Search internships..." class="w-full pl-10 pr-4 py-2 border rounded-lg bg-gray-50">
+                            </div>
+                        </div>
+                        <div>
+                            <label for="location" class="font-semibold text-sm">Location</label>
+                            <select id="location" class="w-full mt-1 p-2 border rounded-lg bg-gray-50">
+                                <option>All Locations</option>
+                                <option>Remote</option>
+                                <option>San Francisco, CA</option>
+                            </select>
+                        </div>
+                         <div>
+                            <label for="type" class="font-semibold text-sm">Type</label>
+                            <select id="type" class="w-full mt-1 p-2 border rounded-lg bg-gray-50">
+                                <option>All Types</option>
+                                <option>Full-time</option>
+                                <option>Part-time</option>
+                            </select>
+                        </div>
+                         <div>
+                            <label for="duration" class="font-semibold text-sm">Duration</label>
+                            <select id="duration" class="w-full mt-1 p-2 border rounded-lg bg-gray-50">
+                                <option>All Durations</option>
+                                <option>3 months</option>
+                                <option>6 months</option>
+                            </select>
+                        </div>
+                         <div>
+                            <label for="field" class="font-semibold text-sm">Field</label>
+                            <select id="field" class="w-full mt-1 p-2 border rounded-lg bg-gray-50">
+                                <option>All Fields</option>
+                                <option>Product Management</option>
+                            </select>
+                        </div>
+                        <button class="w-full mt-2 py-2 px-4 border border-gray-300 rounded-lg text-gray-700 font-semibold hover:bg-gray-100 transition">
+                            <i class="fas fa-undo mr-2"></i> Reset Filters
+                        </button>
+                    </div>
+                </div>
+                
+                 <!-- Featured Companies -->
+                <div class="bg-white p-6 rounded-xl shadow-sm mt-8">
+                    <h2 class="text-xl font-bold mb-4">Featured Companies</h2>
+                    <div class="space-y-4">
+                        <div class="flex items-center space-x-3">
+                            <img src="https://placehold.co/40x40/3B82F6/FFFFFF?text=TC" alt="TechCorp" class="w-10 h-10 rounded-lg">
+                            <div>
+                                <h4 class="font-semibold">TechCorp Solutions</h4>
+                                <a href="#" class="text-sm text-blue-600 hover:underline">View Jobs</a>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <img src="https://placehold.co/40x40/10B981/FFFFFF?text=DA" alt="Data Analytics" class="w-10 h-10 rounded-lg">
+                            <div>
+                                <h4 class="font-semibold">Data Analytics</h4>
+                                <a href="#" class="text-sm text-blue-600 hover:underline">View Jobs</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Internships List -->
+            <section class="lg:col-span-3">
+                <div class="flex justify-between items-center mb-4">
+                    <p class="text-gray-600">Showing 6 internships</p>
+                    <select class="p-2 border rounded-lg bg-white">
+                        <option>Sort by: Best Match</option>
+                    </select>
+                </div>
+                <div class="space-y-6">
+                    <!-- Internship Card 1 -->
+                    <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-blue-500">
+                        <div class="flex items-start space-x-4">
+                            <img src="https://placehold.co/64x64/3B82F6/FFFFFF?text=TC" alt="TechCorp" class="w-16 h-16 rounded-lg">
+                            <div class="flex-1">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <h3 class="text-xl font-bold">Product Management Intern</h3>
+                                        <p class="text-gray-600 font-medium">TechCorp Solutions</p>
+                                    </div>
+                                    <div class="flex items-center space-x-2">
+                                        <i class="fas fa-bookmark text-gray-400"></i>
+                                        <span class="font-bold text-green-600">95% Match</span>
+                                        <div class="w-20 h-2 rounded-full progress-bar-bg"><div class="h-2 rounded-full progress-bar" style="width: 95%;"></div></div>
+                                    </div>
+                                </div>
+                                <div class="text-sm text-gray-500 flex items-center space-x-4 my-2">
+                                    <span><i class="fas fa-map-marker-alt mr-1"></i> San Francisco, CA</span>
+                                    <span><i class="fas fa-clock mr-1"></i> 3 months</span>
+                                    <span><i class="fas fa-dollar-sign mr-1"></i> $25/hour</span>
+                                    <span class="bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full">Full-time</span>
+                                </div>
+                                <p class="text-gray-700">Join our product team to work on cutting-edge technology solutions. You'll collaborate with cross-functional teams to define product roadmaps and analyze user behavior.</p>
+                                <div class="flex space-x-2 mt-2">
+                                    <span class="text-xs bg-gray-200 px-2 py-1 rounded-full">Product Strategy</span>
+                                    <span class="text-xs bg-gray-200 px-2 py-1 rounded-full">Analytics</span>
+                                    <span class="text-xs bg-gray-200 px-2 py-1 rounded-full">User Research</span>
+                                </div>
+                                <div class="flex justify-between items-end mt-4">
+                                    <p class="text-sm text-gray-500">Posted 2 days ago</p>
+                                    <div class="flex space-x-2">
+                                        <button class="font-semibold text-gray-700 bg-gray-200 hover:bg-gray-300 py-2 px-4 rounded-lg transition">Learn More</button>
+                                        <button class="font-semibold text-white bg-blue-600 hover:bg-blue-700 py-2 px-4 rounded-lg transition">Apply Now</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                     <!-- Internship Card 2 -->
+                    <div class="bg-white p-6 rounded-xl shadow-sm">
+                         <div class="flex items-start space-x-4">
+                            <img src="https://placehold.co/64x64/111827/FFFFFF?text=SH" alt="StartupHub" class="w-16 h-16 rounded-lg">
+                            <div class="flex-1">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <h3 class="text-xl font-bold">Junior PM Internship</h3>
+                                        <p class="text-gray-600 font-medium">StartupHub Inc</p>
+                                    </div>
+                                    <div class="flex items-center space-x-2">
+                                        <i class="fas fa-bookmark text-gray-400"></i>
+                                        <span class="font-bold text-orange-500">88% Match</span>
+                                        <div class="w-20 h-2 rounded-full progress-bar-bg"><div class="h-2 rounded-full progress-bar bg-orange-500" style="width: 88%;"></div></div>
+                                    </div>
+                                </div>
+                                 <div class="text-sm text-gray-500 flex items-center space-x-4 my-2">
+                                     <span><i class="fas fa-map-marker-alt mr-1"></i> New York, NY</span>
+                                    <span><i class="fas fa-clock mr-1"></i> 6 months</span>
+                                    <span><i class="fas fa-dollar-sign mr-1"></i> $22/hour</span>
+                                     <span class="bg-green-100 text-green-800 px-2 py-0.5 rounded-full">Remote</span>
+                                </div>
+                                <p class="text-gray-700">Work directly with our founding team to shape the future of our platform. Perfect opportunity for hands-on experience in a fast-paced startup environment.</p>
+                                <div class="flex space-x-2 mt-2">
+                                    <span class="text-xs bg-gray-200 px-2 py-1 rounded-full">Agile</span>
+                                    <span class="text-xs bg-gray-200 px-2 py-1 rounded-full">Market Research</span>
+                                    <span class="text-xs bg-gray-200 px-2 py-1 rounded-full">Feature Planning</span>
+                                </div>
+                                <div class="flex justify-between items-end mt-4">
+                                    <p class="text-sm text-gray-500">Posted 1 week ago</p>
+                                    <div class="flex space-x-2">
+                                        <button class="font-semibold text-gray-700 bg-gray-200 hover:bg-gray-300 py-2 px-4 rounded-lg transition">Learn More</button>
+                                        <button class="font-semibold text-white bg-blue-600 hover:bg-blue-700 py-2 px-4 rounded-lg transition">Apply Now</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Internship Card 3 -->
+                    <div class="bg-white p-6 rounded-xl shadow-sm">
+                        <div class="flex items-start space-x-4">
+                            <img src="https://placehold.co/64x64/EC4899/FFFFFF?text=DAI" alt="DeepTech AI" class="w-16 h-16 rounded-lg">
+                            <div class="flex-1">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <h3 class="text-xl font-bold">AI Product Manager Intern</h3>
+                                        <p class="text-gray-600 font-medium">DeepTech AI</p>
+                                    </div>
+                                    <div class="flex items-center space-x-2">
+                                        <i class="fas fa-bookmark text-gray-400"></i>
+                                        <span class="font-bold text-green-600">91% Match</span>
+                                        <div class="w-20 h-2 rounded-full progress-bar-bg"><div class="h-2 rounded-full progress-bar" style="width: 91%;"></div></div>
+                                    </div>
+                                </div>
+                                <div class="text-sm text-gray-500 flex items-center space-x-4 my-2">
+                                    <span><i class="fas fa-map-marker-alt mr-1"></i> Seattle, WA</span>
+                                    <span><i class="fas fa-clock mr-1"></i> 6 months</span>
+                                    <span><i class="fas fa-dollar-sign mr-1"></i> $35/hour</span>
+                                    <span class="bg-green-100 text-green-800 px-2 py-0.5 rounded-full">Remote</span>
+                                </div>
+                                <p class="text-gray-700">Lead product development for next-generation AI applications. You'll work at the intersection of technology and human-centered design.</p>
+                                <div class="flex space-x-2 mt-2">
+                                    <span class="text-xs bg-gray-200 px-2 py-1 rounded-full">Machine Learning</span>
+                                    <span class="text-xs bg-gray-200 px-2 py-1 rounded-full">AI Ethics</span>
+                                    <span class="text-xs bg-gray-200 px-2 py-1 rounded-full">Product Innovation</span>
+                                </div>
+                                <div class="flex justify-between items-end mt-4">
+                                    <p class="text-sm text-gray-500">Posted 1 day ago</p>
+                                    <div class="flex space-x-2">
+                                        <button class="font-semibold text-gray-700 bg-gray-200 hover:bg-gray-300 py-2 px-4 rounded-lg transition">Learn More</button>
+                                        <button class="font-semibold text-white bg-blue-600 hover:bg-blue-700 py-2 px-4 rounded-lg transition">Apply Now</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                     <!-- Internship Card 4 -->
+                    <div class="bg-white p-6 rounded-xl shadow-sm">
+                         <div class="flex items-start space-x-4">
+                            <img src="https://placehold.co/64x64/F59E0B/FFFFFF?text=RC" alt="RetailTech Corp" class="w-16 h-16 rounded-lg">
+                            <div class="flex-1">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <h3 class="text-xl font-bold">E-commerce PM Intern</h3>
+                                        <p class="text-gray-600 font-medium">RetailTech Corp</p>
+                                    </div>
+                                    <div class="flex items-center space-x-2">
+                                        <i class="fas fa-bookmark text-gray-400"></i>
+                                        <span class="font-bold text-green-600">85% Match</span>
+                                        <div class="w-20 h-2 rounded-full progress-bar-bg"><div class="h-2 rounded-full progress-bar" style="width: 85%;"></div></div>
+                                    </div>
+                                </div>
+                                 <div class="text-sm text-gray-500 flex items-center space-x-4 my-2">
+                                     <span><i class="fas fa-map-marker-alt mr-1"></i> Los Angeles, CA</span>
+                                    <span><i class="fas fa-clock mr-1"></i> 4 months</span>
+                                    <span><i class="fas fa-dollar-sign mr-1"></i> $24/hour</span>
+                                     <span class="bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded-full">Hybrid</span>
+                                </div>
+                                <p class="text-gray-700">Optimize our online shopping experience and drive customer engagement. Work with data scientists and designers to improve conversion rates.</p>
+                                <div class="flex space-x-2 mt-2">
+                                    <span class="text-xs bg-gray-200 px-2 py-1 rounded-full">E-commerce</span>
+                                    <span class="text-xs bg-gray-200 px-2 py-1 rounded-full">Customer Journey</span>
+                                    <span class="text-xs bg-gray-200 px-2 py-1 rounded-full">Conversion Optimization</span>
+                                </div>
+                                <div class="flex justify-between items-end mt-4">
+                                    <p class="text-sm text-gray-500">Posted 4 days ago</p>
+                                    <div class="flex space-x-2">
+                                        <button class="font-semibold text-gray-700 bg-gray-200 hover:bg-gray-300 py-2 px-4 rounded-lg transition">Learn More</button>
+                                        <button class="font-semibold text-white bg-blue-600 hover:bg-blue-700 py-2 px-4 rounded-lg transition">Apply Now</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- AI Chatbot -->
+    <div id="chat-widget-container">
+        <div id="chat-widget" class="hidden w-96 bg-white rounded-2xl shadow-2xl flex flex-col" style="height: 600px;">
+            <!-- Header -->
+            <div class="p-4 rounded-t-2xl text-white flex items-center justify-between" style="background: linear-gradient(to right, #4F46E5, #818CF8);">
+                <div class="flex items-center">
+                    <div class="relative">
+                        <i class="fas fa-robot text-2xl"></i>
+                        <span class="absolute bottom-0 right-0 block h-2.5 w-2.5 rounded-full bg-green-400 ring-2 ring-white"></span>
+                    </div>
+                    <div class="ml-3">
+                        <p class="font-bold">✨ AI Assistant</p>
+                        <p class="text-xs">Online</p>
+                    </div>
+                </div>
+                <button id="close-chat" class="hover:text-gray-200">
+                    <i class="fas fa-times text-lg"></i>
+                </button>
+            </div>
+            <!-- Messages -->
+            <div id="message-container" class="flex-1 p-4 space-y-4 overflow-y-auto message-container">
+                 <!-- Messages will be added here -->
+            </div>
+            <!-- Quick Actions -->
+            <div class="p-2 border-t border-gray-200">
+                <div class="flex flex-wrap gap-2">
+                    <button class="quick-action text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1.5 rounded-full">Find internships</button>
+                    <button class="quick-action text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1.5 rounded-full">Assess my skills</button>
+                    <button class="quick-action text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1.5 rounded-full">Career advice</button>
+                </div>
+            </div>
+            <!-- Input -->
+            <div class="p-4 border-t border-gray-200 flex items-center">
+                <input id="chat-input" type="text" placeholder="Type your message..." class="w-full px-4 py-2 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
+                <button id="send-btn" class="ml-3 text-blue-500 hover:text-blue-600 disabled:text-gray-300">
+                    <i class="fas fa-paper-plane text-xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <button id="chat-toggle" class="relative" title="Chat with AI Assistant">
+            <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center text-white shadow-lg transform hover:scale-110 transition-transform">
+                <i class="fas fa-robot text-3xl"></i>
+            </div>
+            <span class="absolute top-0 right-0 block h-4 w-4 rounded-full bg-green-400 ring-2 ring-white"></span>
+        </button>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+             // Chatbot elements
+            const chatToggle = document.getElementById('chat-toggle');
+            const chatWidget = document.getElementById('chat-widget');
+            const closeChatBtn = document.getElementById('close-chat');
+            const messageContainer = document.getElementById('message-container');
+            const chatInput = document.getElementById('chat-input');
+            const sendBtn = document.getElementById('send-btn');
+            const quickActionButtons = document.querySelectorAll('.quick-action');
+
+            // --- Gemini API Configuration ---
+            const apiKey = "PASTE_YOUR_GEMINI_API_KEY_HERE";
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+            async function callGemini(prompt) {
+                const payload = {
+                    contents: [{ parts: [{ text: prompt }] }],
+                };
+
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`API call failed with status: ${response.status}`);
+                    }
+
+                    const result = await response.json();
+                    if (result.candidates && result.candidates[0].content.parts[0].text) {
+                        return result.candidates[0].content.parts[0].text;
+                    } else {
+                        throw new Error('Unexpected API response structure');
+                    }
+                } catch (error) {
+                    console.error("Gemini API call error:", error);
+                    return "Sorry, I'm having a little trouble connecting to my brain right now. Please try again in a moment.";
+                }
+            }
+
+            // --- AI Chatbot Logic ---
+            chatToggle.addEventListener('click', () => chatWidget.classList.toggle('hidden'));
+            closeChatBtn.addEventListener('click', () => chatWidget.classList.add('hidden'));
+
+            function addMessage(sender, text) {
+               const messageEl = document.createElement('div');
+                const timestamp = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+
+                let messageInnerHTML = '';
+                if(sender === 'ai') {
+                    messageInnerHTML = `
+                        <div class="flex items-start gap-3">
+                            <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-robot text-gray-500"></i>
+                            </div>
+                            <div>
+                                <div class="bg-gray-100 p-3 rounded-lg rounded-tl-none">
+                                    <p class="text-sm text-gray-800">${text}</p>
+                                </div>
+                                <p class="text-xs text-gray-400 mt-1">${timestamp}</p>
+                            </div>
+                        </div>`;
+                } else {
+                    messageInnerHTML = `
+                        <div class="flex items-start gap-3 flex-row-reverse">
+                             <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-user text-gray-500"></i>
+                            </div>
+                            <div>
+                                <div class="bg-blue-500 text-white p-3 rounded-lg rounded-tr-none">
+                                    <p class="text-sm">${text}</p>
+                                </div>
+                                <p class="text-xs text-gray-400 mt-1 text-right">${timestamp}</p>
+                            </div>
+                        </div>`;
+                }
+                messageEl.innerHTML = messageInnerHTML;
+                messageContainer.appendChild(messageEl);
+                messageContainer.scrollTop = messageContainer.scrollHeight;
+            }
+
+            function showTypingIndicator() {
+                const typingEl = document.createElement('div');
+                typingEl.id = 'typing-indicator';
+                typingEl.innerHTML = `
+                     <div class="flex items-start gap-3">
+                        <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-robot text-gray-500"></i>
+                        </div>
+                        <div class="bg-gray-100 p-3 rounded-lg rounded-tl-none typing-indicator">
+                            <span class="w-2 h-2 bg-gray-400 rounded-full inline-block"></span>
+                            <span class="w-2 h-2 bg-gray-400 rounded-full inline-block"></span>
+                            <span class="w-2 h-2 bg-gray-400 rounded-full inline-block"></span>
+                        </div>
+                    </div>`;
+                messageContainer.appendChild(typingEl);
+                messageContainer.scrollTop = messageContainer.scrollHeight;
+            }
+
+            function hideTypingIndicator() {
+                const typingEl = document.getElementById('typing-indicator');
+                if (typingEl) typingEl.remove();
+            }
+
+            async function handleSendMessage() {
+                const text = chatInput.value.trim();
+                if (text === '') return;
+                
+                addMessage('user', text);
+                chatInput.value = '';
+
+                showTypingIndicator();
+                
+                const systemPrompt = "You are a friendly and helpful AI internship assistant. Your goal is to guide students in their career journey. Keep your answers concise, encouraging, and focused on internships, skills, and career advice.";
+                const prompt = `${systemPrompt}\n\nUser: ${text}\nAI:`;
+                
+                const aiResponse = await callGemini(prompt);
+                
+                hideTypingIndicator();
+                addMessage('ai', aiResponse);
+            }
+            
+            sendBtn.addEventListener('click', handleSendMessage);
+            chatInput.addEventListener('keypress', (e) => { if(e.key === 'Enter') handleSendMessage(); });
+            quickActionButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    chatInput.value = button.textContent;
+                    handleSendMessage();
+                });
+            });
+
+            addMessage('ai', 'Hi! I\'m your AI internship assistant. I can help you find internships, prepare for applications, or answer questions about your career path. How can I help you today?');
+            
+        });
+    </script>
+
+</body>
+</html>
+
