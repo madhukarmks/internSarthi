@@ -434,7 +434,7 @@
             const sendBtn = document.getElementById('send-btn');
             
             // --- Gemini API Configuration ---
-            const apiKey = "PASTE_YOUR_GEMINI_API_KEY_HERE";
+            const apiKey = "AIzaSyCC35WRw4yIZ9F4sDf8z2E7__bLJTnzLS4";
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
 
             async function callGemini(prompt) {
@@ -508,7 +508,7 @@
             }
 
             async function handleSendMessage() {
-                if (apiKey === "PASTE_YOUR_GEMINI_API_KEY_HERE" || !apiKey) {
+                if (apiKey === "AIzaSyCC35WRw4yIZ9F4sDf8z2E7__bLJTnzLS4" || !apiKey) {
                     addMessage('ai', "It looks like the API key is missing. Please add your key to the code to enable the AI Interviewer.");
                     return;
                 }
@@ -606,4 +606,5 @@
 
 </body>
 </html>
+
 
