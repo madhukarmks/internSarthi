@@ -508,7 +508,7 @@
             }
 
             async function handleSendMessage() {
-                if (apiKey === "AIzaSyCC35WRw4yIZ9F4sDf8z2E7__bLJTnzLS4" || !apiKey) {
+                if (!apiKey || apiKey.trim() === "") {
                     addMessage('ai', "It looks like the API key is missing. Please add your key to the code to enable the AI Interviewer.");
                     return;
                 }
@@ -606,5 +606,6 @@
 
 </body>
 </html>
+
 
 
