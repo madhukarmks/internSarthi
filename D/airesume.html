@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Resume Builder</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    body { font-family: 'Inter', sans-serif; background-color: #f9fafb; }
+    .resume-preview { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    .section-title { font-weight: bold; margin-top: 10px; margin-bottom: 5px; color: #374151; }
+    .btn-gradient { background: linear-gradient(to right, #8A2BE2, #C71585); }
+    .toggle-header { cursor: pointer; display: flex; justify-content: space-between; padding: 0.5rem; background-color: #f3f4f6; border-radius: 0.5rem; margin-top: 0.5rem; }
+    .toggle-content { display: none; padding: 0.5rem 0; }
+    .loading { animation: pulse 1s infinite; }
+    @keyframes pulse { 0% { opacity: 0.5; } 50% { opacity: 1; } 100% { opacity: 0.5; } }
+  </style>
+</head>
+<body class="p-6">
+
+  <h1 class="text-3xl font-bold text-center mb-6">🤖 AI Profile & Resume Builder</h1>
+
+  <div class="grid md:grid-cols-2 gap-8">
+    <!-- LEFT: Form -->
+    <div class="bg-white p-6 rounded-xl shadow-md">
+      <h2 class="text-xl font-semibold mb-4">Fill Your Details</h2>
+      <form id="resumeForm" class="space-y-2">
+        
+        <!-- Toggle Sections -->
+        <div class="toggle">
+          <div class="toggle-header">👤 Personal Info <span>+</span></div>
+          <div class="toggle-content">
+            <input type="text" id="name" placeholder="Full Name" class="w-full border rounded-md p-2 my-2" required>
+            <input type="email" id="email" placeholder="Email" class="w-full border rounded-md p-2 my-2" required>
+            <input type="text" id="phone" placeholder="Phone" class="w-full border rounded-md p-2 my-2">
+            <input type="url" id="github" placeholder="GitHub Profile URL" class="w-full border rounded-md p-2 my-2">
+            <input type="url" id="linkedin" placeholder="LinkedIn Profile URL" class="w-full border rounded-md p-2 my-2">
+          </div>
+        </div>
+
+        <div class="toggle">
+          <div class="toggle-header">🎓 Education <span>+</span></div>
+          <div class="toggle-content">
+            <textarea id="education" placeholder="Education Details" class="w-full border rounded-md p-2 my-2"></textarea>
+          </div>
+        </div>
+
+        <div class="toggle">
+          <div class="toggle-header">💼 Experience <span>+</span></div>
+          <div class="toggle-content">
+            <textarea id="experience" placeholder="Work Experience" class="w-full border rounded-md p-2 my-2"></textarea>
+          </div>
+        </div>
+
+        <div class="toggle">
+          <div class="toggle-header">📂 Projects <span>+</span></div>
+          <div class="toggle-content">
+            <textarea id="projects" placeholder="Projects (comma separated)" class="w-full border rounded-md p-2 my-2"></textarea>
+          </div>
+        </div>
+
+        <div class="toggle">
+          <div class="toggle-header">🛠 Skills <span>+</span></div>
+          <div class="toggle-content">
+            <input type="text" id="skills" placeholder="Skills (comma separated)" class="w-full border rounded-md p-2 my-2">
+          </div>
+        </div>
+
+        <div class="toggle">
+          <div class="toggle-header">🏆 Achievements <span>+</span></div>
+          <div class="toggle-content">
+            <textarea id="achievements" placeholder="Achievements / Awards" class="w-full border rounded-md p-2 my-2"></textarea>
+          </div>
+        </div>
+
+        <div class="toggle">
+          <div class="toggle-header">🎯 Career Goal <span>+</span></div>
+          <div class="toggle-content">
+            <textarea id="careerGoal" placeholder="Career Goal / Objective" class="w-full border rounded-md p-2 my-2"></textarea>
+          </div>
+        </div>
+
+        <div class="toggle">
+          <div class="toggle-header">🎨 Hobbies <span>+</span></div>
+          <div class="toggle-content">
+            <input type="text" id="hobbies" placeholder="Hobbies (comma separated)" class="w-full border rounded-md p-2 my-2">
+          </div>
+        </div>
+
+        <button type="submit" class="w-full py-2 mt-3 text-white rounded-md btn-gradient">Generate AI Resume</button>
+      </form>
+    </div>
+
+    <!-- RIGHT: Resume Preview -->
+    <div>
+      <h2 class="text-xl font-semibold mb-4">Live Resume Preview</h2>
+      <div id="resumePreview" class="resume-preview">
+        <h1 class="text-2xl font-bold" id="previewName">Your Name</h1>
+        <p id="previewEmail" class="text-gray-600">your@email.com</p>
+        <p id="previewPhone" class="text-gray-600">+91 0000000000</p>
+        <p><a id="previewGitHub" href="#" target="_blank" class="text-blue-600 underline hidden">GitHub</a> | 
+           <a id="previewLinkedIn" href="#" target="_blank" class="text-blue-600 underline hidden">LinkedIn</a></p>
+
+        <h3 class="section-title">AI-Generated Summary</h3>
+        <p id="previewSummary">Fill details and click Generate.</p>
+
+        <h3 class="section-title">Education</h3>
+        <p id="previewEducation"></p>
+
+        <h3 class="section-title">Experience</h3>
+        <p id="previewExperience"></p>
+
+        <h3 class="section-title">Projects</h3>
+        <p id="previewProjects"></p>
+
+        <h3 class="section-title">Skills</h3>
+        <p id="previewSkills"></p>
+
+        <h3 class="section-title">Achievements</h3>
+        <p id="previewAchievements"></p>
+
+        <h3 class="section-title">Hobbies</h3>
+        <p id="previewHobbies"></p>
+      </div>
+
+      <button id="downloadBtn" class="w-full py-2 mt-4 text-white rounded-md btn-gradient">Download PDF</button>
+    </div>
+  </div>
+
+  <script>
+    // Toggle functionality
+    document.querySelectorAll(".toggle-header").forEach(header => {
+      header.addEventListener("click", () => {
+        const content = header.nextElementSibling;
+        const isOpen = content.style.display === "block";
+        document.querySelectorAll(".toggle-content").forEach(c => c.style.display = "none");
+        document.querySelectorAll(".toggle-header span").forEach(s => s.textContent = "+");
+        if (!isOpen) {
+          content.style.display = "block";
+          header.querySelector("span").textContent = "-";
+        }
+      });
+    });
+
+    const { jsPDF } = window.jspdf;
+    const apiKey = "AIzaSyAF3zTZDhP6aYUdCocOdIXS-FpUp7vdfzE";
+    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+    const form = document.getElementById('resumeForm');
+    const previewName = document.getElementById('previewName');
+    const previewEmail = document.getElementById('previewEmail');
+    const previewPhone = document.getElementById('previewPhone');
+    const previewGitHub = document.getElementById('previewGitHub');
+    const previewLinkedIn = document.getElementById('previewLinkedIn');
+    const previewSummary = document.getElementById('previewSummary');
+    const previewEducation = document.getElementById('previewEducation');
+    const previewExperience = document.getElementById('previewExperience');
+    const previewProjects = document.getElementById('previewProjects');
+    const previewSkills = document.getElementById('previewSkills');
+    const previewAchievements = document.getElementById('previewAchievements');
+    const previewHobbies = document.getElementById('previewHobbies');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const phone = document.getElementById('phone').value;
+      const github = document.getElementById('github').value;
+      const linkedin = document.getElementById('linkedin').value;
+      const education = document.getElementById('education').value;
+      const experience = document.getElementById('experience').value;
+      const projects = document.getElementById('projects').value;
+      const skills = document.getElementById('skills').value;
+      const achievements = document.getElementById('achievements').value;
+      const hobbies = document.getElementById('hobbies').value;
+      const careerGoal = document.getElementById('careerGoal').value;
+
+      previewName.textContent = name;
+      previewEmail.textContent = email;
+      previewPhone.textContent = phone;
+      previewEducation.textContent = education;
+      previewExperience.textContent = experience;
+      previewProjects.textContent = projects;
+      previewSkills.textContent = skills;
+      previewAchievements.textContent = achievements;
+      previewHobbies.textContent = hobbies;
+
+      if (github) { previewGitHub.href = github; previewGitHub.classList.remove("hidden"); }
+      if (linkedin) { previewLinkedIn.href = linkedin; previewLinkedIn.classList.remove("hidden"); }
+
+      previewSummary.textContent = "Generating summary with AI...";
+      previewSummary.classList.add("loading");
+
+      try {
+        const prompt = `Create a short professional resume summary for:
+          Name: ${name}
+          Career Goal: ${careerGoal}
+          Skills: ${skills}
+          Education: ${education}
+          Experience: ${experience}
+          Projects: ${projects}
+          Achievements: ${achievements}
+        The summary should be 3-4 lines, professional, and ATS-friendly.`;
+
+        const res = await fetch(apiUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+        });
+
+        const data = await res.json();
+        let summary = data?.candidates?.[0]?.content?.parts?.[0]?.text || "AI could not generate summary.";
+        previewSummary.textContent = summary;
+      } catch (err) {
+        previewSummary.textContent = "Error generating summary. Check API key.";
+      } finally {
+        previewSummary.classList.remove("loading");
+      }
+    });
+  </script>
+</body>
+</html>
