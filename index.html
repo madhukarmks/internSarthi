@@ -36,6 +36,44 @@
         .btn-gradient {
              background-image: linear-gradient(to right, #26de81, #00bcd4);
         }
+         body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FBFBFF;
+            padding: 4rem;
+        }
+        #language-selector {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+        #language-menu {
+            transition: all 0.3s ease-in-out;
+            transform-origin: top right;
+        }
+        #language-menu.hidden {
+            transform: scale(0.9);
+            opacity: 0;
+            pointer-events: none;
+        }
+        .page {
+            display: none;
+        }
+        .page.active {
+            display: block;
+        }
+        /* Animation for text while translating */
+        .translating {
+            animation: pulse-text 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse-text {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: .5;
+            }
+        }
     </style>
 </head>
 <body class="text-gray-800">
@@ -46,9 +84,28 @@
             <div class="w-14 h-14 mx-auto bg-purple-100 rounded-2xl flex items-center justify-center mb-4 shadow-sm">
                 <i class="fas fa-bell text-2xl text-purple-600"></i>
             </div>
+<body class="text-gray-800">
 
+    <!-- Language Translator HTML -->
+    <div id="language-selector">
+        <button id="language-toggle-btn" class="bg-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center text-gray-600 hover:bg-gray-100 transition">
+            <i class="fas fa-globe text-xl"></i>
+        </button>
+        <div id="language-menu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl py-1">
+            <a href="#" class="language-option block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" data-lang="en">English</a>
+            <a href="#" class="language-option block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" data-lang="es">Español</a>
+            <a href="#" class="language-option block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" data-lang="fr">Français</a>
+            <a href="#" class="language-option block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" data-lang="hi">हिन्दी</a>
+            <a href="#" class="language-option block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" data-lang="de">Deutsch</a>
+            <a href="#" class="language-option block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" data-lang="ja">日本語</a>
+            <a href="#" class="language-option block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" data-lang="ru">Русский</a>
+            <a href="#" class="language-option block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" data-lang="pt">Português</a>
+        </div>
+    </div>
             <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight">
-                Welcome to Your <span class="gradient-text">AI-Powered</span><br> <span class="gradient-text">Career Journey with <br> internSarthi</span>
+                
+                Welcome to Your <span class="gradient-text">AI-Powered</span>
+                <br> <span class="gradient-text">Career Journey with <br> internSarthi</span>
             </h1>
             
             <p class="mt-4 text-md text-gray-500 max-w-2xl mx-auto">
@@ -86,7 +143,7 @@
                     Start Your Journey <i class="fas fa-arrow-right ml-2"></i>
                 </button>
                 <div class="mt-5 flex items-center justify-center space-x-4 text-gray-500 text-sm">
-                    <span class="flex items-center"><i class="fas fa-bolt text-yellow-500 mr-1.5"></i>Takes only 5 minutes</span>
+                    <span class="flex items-center"><i class="fas fa-bolt text-yellow-500 mr-1.5"></i>Gets intern in few steps</span>
                     <span class="text-gray-300">•</span>
                     <span class="flex items-center"><i class="fas fa-gift text-red-500 mr-1.5"></i>Earn rewards</span>
                     <span class="text-gray-300">•</span>
@@ -204,9 +261,156 @@
                 window.location.href = "D/das1.html";
             }, 2500);
         });
+          document.addEventListener('DOMContentLoaded', () => {
+            const languageToggleBtn = document.getElementById('language-toggle-btn');
+            const languageMenu = document.getElementById('language-menu');
+            const languageOptions = document.querySelectorAll('.language-option');
+            const goToFeaturesBtn = document.getElementById('go-to-features');
+            const goBackBtn = document.getElementById('go-back');
+            const pages = document.querySelectorAll('.page');
+            
+            // --- Gemini API Configuration ---
+            const apiKey = "AIzaSyAF3zTZDhP6aYUdCocOdIXS-FpUp7vdfzE"; 
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+            // Cache to store fetched translations
+            const translationCache = {};
+
+            async function callGemini(prompt, retries = 3, delay = 1000) {
+                const payload = { contents: [{ parts: [{ text: prompt }] }] };
+
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (response.status === 429 || response.status === 503) {
+                        if (retries > 0) {
+                            await new Promise(res => setTimeout(res, delay));
+                            return callGemini(prompt, retries - 1, delay * 2); // Exponential backoff
+                        } else {
+                            throw new Error(`API call failed after multiple retries with status: ${response.status}`);
+                        }
+                    }
+
+                    if (!response.ok) throw new Error(`API call failed: ${response.status}`);
+                    
+                    const result = await response.json();
+                    let responseText = result.candidates[0].content.parts[0].text;
+                    responseText = responseText.replace(/```json/g, '').replace(/```/g, '').trim();
+                    return responseText;
+
+                } catch (error) {
+                     // Don't log retries as errors
+                    if (!error.message.includes('retries')) {
+                        console.error("Gemini API Error:", error);
+                    }
+                    // On final failure, extract the original JSON to revert text
+                    const originalJsonMatch = prompt.match(/JSON: (\{.*\})/);
+                    if(originalJsonMatch && originalJsonMatch[1]) {
+                        return originalJsonMatch[1];
+                    }
+                    return "{}"; // Return empty JSON string on failure
+                }
+            }
+
+            function applyTranslations(translations) {
+                for (const key in translations) {
+                    const element = document.querySelector(`.page.active [data-key="${key}"]`);
+                    if (element) {
+                        element.textContent = translations[key];
+                    }
+                }
+            }
+
+            async function setLanguage(lang) {
+                localStorage.setItem('preferredLanguage', lang);
+                const elements = document.querySelectorAll('.page.active [data-key]');
+                
+                // Set original text on first run
+                elements.forEach(el => {
+                    if (!el.dataset.originalText) {
+                        el.dataset.originalText = el.textContent.trim();
+                    }
+                });
+
+                if (lang === 'en') {
+                    elements.forEach(el => {
+                        el.textContent = el.dataset.originalText;
+                    });
+                    languageMenu.classList.add('hidden');
+                    return;
+                }
+
+                // Check cache first
+                if (translationCache[lang]) {
+                    applyTranslations(translationCache[lang]);
+                    languageMenu.classList.add('hidden');
+                    return;
+                }
+                
+                elements.forEach(el => el.classList.add('translating'));
+
+                const textsToTranslate = {};
+                elements.forEach(el => {
+                    textsToTranslate[el.dataset.key] = el.dataset.originalText;
+                });
+
+                const prompt = `Translate the following JSON object's values to ${lang}. Return only a valid JSON object with the same keys. JSON: ${JSON.stringify(textsToTranslate)}`;
+                
+                try {
+                    const translatedJsonString = await callGemini(prompt);
+                    const translatedTexts = JSON.parse(translatedJsonString);
+                    translationCache[lang] = translatedTexts; // Cache the result
+                    applyTranslations(translatedTexts);
+                } catch (error) {
+                    console.error("Failed to parse translated content:", error);
+                } finally {
+                    elements.forEach(el => el.classList.remove('translating'));
+                    languageMenu.classList.add('hidden');
+                }
+            }
+
+            // --- Event Listeners ---
+            languageToggleBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                languageMenu.classList.toggle('hidden');
+            });
+
+            languageOptions.forEach(option => {
+                option.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const selectedLang = e.target.getAttribute('data-lang');
+                    setLanguage(selectedLang);
+                });
+            });
+
+            document.addEventListener('click', () => {
+                if (!languageMenu.classList.contains('hidden')) {
+                    languageMenu.classList.add('hidden');
+                }
+            });
+            
+            // --- Page Navigation ---
+            function showPage(pageId) {
+                pages.forEach(page => {
+                    page.classList.toggle('active', page.id === pageId);
+                });
+                setLanguage(localStorage.getItem('preferredLanguage') || 'en');
+            }
+
+            goToFeaturesBtn.addEventListener('click', () => showPage('page-features'));
+            goBackBtn.addEventListener('click', () => showPage('page-welcome'));
+
+            // Load saved language or default to English
+            const savedLang = localStorage.getItem('preferredLanguage') || 'en';
+            setLanguage(savedLang);
+            showPage('page-welcome'); // Show initial page
+        });
     </script>
 
 </body>
 </html>
-
 
