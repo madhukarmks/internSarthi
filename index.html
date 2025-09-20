@@ -34,18 +34,7 @@
             100% { transform: rotate(360deg); }
         }
         .btn-gradient {
-             background-image: linear-gradient(to right, #26de81, #00bcd4);
-        }
-         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #FBFBFF;
-            padding: 4rem;
-        }
-        #language-selector {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 100;
+            background-image: linear-gradient(to right, #26de81, #00bcd4);
         }
         #language-menu {
             transition: all 0.3s ease-in-out;
@@ -55,12 +44,6 @@
             transform: scale(0.9);
             opacity: 0;
             pointer-events: none;
-        }
-        .page {
-            display: none;
-        }
-        .page.active {
-            display: block;
         }
         /* Animation for text while translating */
         .translating {
@@ -76,40 +59,38 @@
         }
     </style>
 </head>
-<body class="text-gray-800">
+<body class="text-gray-800 p-4 sm:p-6 md:p-8">
 
-    <div id="welcome-page" class="min-h-screen flex flex-col items-center justify-center p-4">
-        <div class="text-center max-w-5xl mx-auto">
-            
-            <div class="w-14 h-14 mx-auto bg-purple-100 rounded-2xl flex items-center justify-center mb-4 shadow-sm">
-                <i class="fas fa-bell text-2xl text-purple-600"></i>
-            </div>
-<body class="text-gray-800">
-
-    <!-- Language Translator HTML -->
-    <div id="language-selector">
+    <div id="language-selector" class="fixed top-4 right-4 z-50">
         <button id="language-toggle-btn" class="bg-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center text-gray-600 hover:bg-gray-100 transition">
             <i class="fas fa-globe text-xl"></i>
         </button>
         <div id="language-menu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl py-1">
             <a href="#" class="language-option block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" data-lang="en">English</a>
-            <a href="#" class="language-option block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" data-lang="es">हिन्दी</a>
-            <a href="#" class="language-option block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" data-lang="fr">ગુજરાતી</a>
-            <a href="#" class="language-option block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" data-lang="hi">काश्मीरी</a>
-            <a href="#" class="language-option block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" data-lang="de">मैथिली</a>
-            <a href="#" class="language-option block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" data-lang="ja">उर्दू</a>
-            <a href="#" class="language-option block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" data-lang="ru">தமிழ்</a>
-            <a href="#" class="language-option block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" data-lang="pt">অসমীয়া</a>
+            <a href="#" class="language-option block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" data-lang="es">Español</a>
+            <a href="#" class="language-option block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" data-lang="fr">Français</a>
+            <a href="#" class="language-option block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" data-lang="hi">हिन्दी</a>
+            <a href="#" class="language-option block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" data-lang="de">Deutsch</a>
+            <a href="#" class="language-option block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" data-lang="ja">日本語</a>
+            <a href="#" class="language-option block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" data-lang="ru">Русский</a>
+            <a href="#" class="language-option block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" data-lang="pt">Português</a>
         </div>
     </div>
-            <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight">
-                
+
+    <div id="welcome-page" class="min-h-screen flex flex-col items-center justify-center">
+        <div class="text-center max-w-5xl mx-auto">
+            
+            <div class="w-14 h-14 mx-auto bg-purple-100 rounded-2xl flex items-center justify-center mb-4 shadow-sm">
+                <i class="fas fa-bell text-2xl text-purple-600"></i>
+            </div>
+            
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight">
                 Welcome to Your <span class="gradient-text">AI-Powered</span>
                 <br> <span class="gradient-text">Career Journey with <br> internSarthi</span>
             </h1>
             
-            <p class="mt-4 text-md text-gray-500 max-w-2xl mx-auto">
-                Students struggle to find government internships relevant to their profile. Our platform uses Al to recommend the best opportunities, track applications, and prepare students for success.
+            <p class="mt-4 text-base text-gray-500 max-w-2xl mx-auto">
+                Students struggle to find government internships relevant to their profile. Our platform uses Al to recommend the best opportunities, track applications, and prepare students for success.
             </p>
 
             <div class="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -142,11 +123,11 @@
                 <button id="start-journey-btn" class="bg-gradient-to-r from-purple-600 to-indigo-700 text-white font-bold py-3 px-8 rounded-lg text-md hover:opacity-90 transition duration-300 shadow-lg hover:shadow-xl">
                     Start Your Journey <i class="fas fa-arrow-right ml-2"></i>
                 </button>
-                <div class="mt-5 flex items-center justify-center space-x-4 text-gray-500 text-sm">
+                <div class="mt-5 flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 text-gray-500 text-sm">
                     <span class="flex items-center"><i class="fas fa-bolt text-yellow-500 mr-1.5"></i>Gets intern in few steps</span>
-                    <span class="text-gray-300">•</span>
+                    <span class="hidden sm:inline text-gray-300">•</span>
                     <span class="flex items-center"><i class="fas fa-gift text-red-500 mr-1.5"></i>Earn rewards</span>
-                    <span class="text-gray-300">•</span>
+                    <span class="hidden sm:inline text-gray-300">•</span>
                     <span class="flex items-center"><i class="fas fa-wand-magic-sparkles text-pink-500 mr-1.5"></i>Get matched instantly</span>
                 </div>
             </div>
@@ -156,39 +137,38 @@
     <div id="signup-modal" class="fixed inset-0 z-50 hidden">
         <div class="modal-overlay absolute inset-0"></div>
         <div class="flex items-center justify-center min-h-screen">
-            <div class="bg-white rounded-lg shadow-2xl p-8 max-w-4xl w-full m-4 grid grid-cols-1 md:grid-cols-2 gap-8 relative">
-                <button id="close-signup-modal" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
-                <div class="flex flex-col justify-between">
+            <div class="bg-white rounded-lg shadow-2xl p-6 md:p-8 max-w-4xl w-full m-4 grid grid-cols-1 md:grid-cols-2 gap-8 relative">
+                <button id="close-signup-modal" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-2xl z-10">&times;</button>
+                
+                <div class="flex-col justify-between hidden md:flex">
                     <div>
                         <div class="flex items-center mb-6">
-                             <div class="w-10 h-10 bg-blue-600 flex items-center justify-center rounded-lg text-white font-bold text-xl"><i class="fas fa-link"></i></div>
-                             <span class="ml-3 text-2xl font-bold text-gray-900">internSarthi</span>
+                            <div class="w-10 h-10 bg-blue-600 flex items-center justify-center rounded-lg text-white font-bold text-xl"><i class="fas fa-link"></i></div>
+                            <span class="ml-3 text-2xl font-bold text-gray-900">internSarthi</span>
                         </div>
-                        <h2 class="text-3xl font-bold text-gray-900">Join Us and Find Your Dream Internship</h2>
+                        <h2 class="text-2xl lg:text-3xl font-bold text-gray-900">Join Us and Find Your Dream Internship</h2>
                         <p class="mt-3 text-gray-600">Create an account to get personalized internship recommendations powered by our advanced AI platform.</p>
                     </div>
-                     <div class="mt-8">
+                    <div class="mt-8">
                         <p class="text-sm text-gray-500 mb-2">Or sign up with:</p>
                         <div class="flex flex-col space-y-3">
-                           <button class="w-full flex items-center justify-center py-3 px-4 border border-gray-300 rounded-lg hover:bg-gray-50"><i class="fab fa-google text-blue-500 mr-3"></i> Continue with Google</button>
-                            
-                           <button class="w-full flex items-center justify-center py-3 px-4 bg-blue-800 text-white rounded-lg hover:bg-blue-900"><i class="fab fa-linkedin-in mr-3"></i> Continue with LinkedIn</button>
-                           <button class="w-full flex items-center justify-center py-3 px-4 border border-gray-300 rounded-lg hover:bg-gray-50"><i class="fa-brands fa-github"></i> Continue with Github</button>
-                            
+                            <button class="w-full flex items-center justify-center py-3 px-4 border border-gray-300 rounded-lg hover:bg-gray-50"><i class="fab fa-google text-blue-500 mr-3"></i> Continue with Google</button>
+                            <button class="w-full flex items-center justify-center py-3 px-4 bg-blue-800 text-white rounded-lg hover:bg-blue-900"><i class="fab fa-linkedin-in mr-3"></i> Continue with LinkedIn</button>
                         </div>
                     </div>
                 </div>
+
                 <div>
-                      <h3 class="text-2xl font-bold text-gray-800 mb-6">Create your account</h3>
-                      <form id="signup-form" class="space-y-4">
-                          <div><label for="fullName" class="block text-sm font-medium text-gray-700">Full Name</label><input type="text" id="fullName" placeholder="John Doe" required class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"></div>
-                          <div><label for="signupEmail" class="block text-sm font-medium text-gray-700">Email address</label><input type="email" id="signupEmail" placeholder="you@example.com" required class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"></div>
-                           <div><label for="signupPassword" class="block text-sm font-medium text-gray-700">Password</label><input type="password" id="signupPassword" placeholder="••••••••" required class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"></div>
-                          <div><label for="confirmPassword" class="block text-sm font-medium text-gray-700">Confirm Password</label><input type="password" id="confirmPassword" placeholder="••••••••" required class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"></div>
-                          <div class="flex items-center"><input id="terms" name="terms" type="checkbox" required class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"><label for="terms" class="ml-2 block text-sm text-gray-900">I agree to the <a href="#" class="text-blue-600 hover:underline">Terms of Service</a> and <a href="#" class="text-blue-600 hover:underline">Privacy Policy</a></label></div>
-                          <button type="submit" class="w-full btn-gradient text-white font-bold py-3 px-4 rounded-lg hover:opacity-90 transition duration-300 shadow-md">Sign Up</button>
-                          <p class="text-sm text-center">Already have an account? <a href="#" id="show-signin-link" class="font-medium text-blue-600 hover:underline">Sign in</a></p>
-                      </form>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-6">Create your account</h3>
+                    <form id="signup-form" class="space-y-4">
+                        <div><label for="fullName" class="block text-sm font-medium text-gray-700">Full Name</label><input type="text" id="fullName" placeholder="John Doe" required class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"></div>
+                        <div><label for="signupEmail" class="block text-sm font-medium text-gray-700">Email address</label><input type="email" id="signupEmail" placeholder="you@example.com" required class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"></div>
+                        <div><label for="signupPassword" class="block text-sm font-medium text-gray-700">Password</label><input type="password" id="signupPassword" placeholder="••••••••" required class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"></div>
+                        <div><label for="confirmPassword" class="block text-sm font-medium text-gray-700">Confirm Password</label><input type="password" id="confirmPassword" placeholder="••••••••" required class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"></div>
+                        <div class="flex items-center"><input id="terms" name="terms" type="checkbox" required class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"><label for="terms" class="ml-2 block text-sm text-gray-900">I agree to the <a href="#" class="text-blue-600 hover:underline">Terms of Service</a></label></div>
+                        <button type="submit" class="w-full btn-gradient text-white font-bold py-3 px-4 rounded-lg hover:opacity-90 transition duration-300 shadow-md">Sign Up</button>
+                        <p class="text-sm text-center">Already have an account? <a href="#" id="show-signin-link" class="font-medium text-blue-600 hover:underline">Sign in</a></p>
+                    </form>
                 </div>
             </div>
         </div>
@@ -197,27 +177,29 @@
     <div id="signin-modal" class="fixed inset-0 z-50 hidden">
         <div class="modal-overlay absolute inset-0"></div>
         <div class="flex items-center justify-center min-h-screen">
-             <div class="bg-white rounded-lg shadow-2xl p-8 max-w-4xl w-full m-4 grid md:grid-cols-2 gap-8 relative">
-                 <button id="close-signin-modal" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-2xl md:hidden">&times;</button>
-                <div class="flex flex-col justify-between">
+            <div class="bg-white rounded-lg shadow-2xl p-6 md:p-8 max-w-4xl w-full m-4 grid grid-cols-1 md:grid-cols-2 gap-8 relative">
+                <button id="close-signin-modal" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-2xl z-10">&times;</button>
+                
+                <div class="flex-col justify-between hidden md:flex">
                     <div>
                         <div class="flex items-center mb-6">
-                             <div class="w-10 h-10 bg-blue-600 flex items-center justify-center rounded-lg text-white font-bold text-xl"><i class="fas fa-link"></i></div>
-                             <span class="ml-3 text-2xl font-bold text-gray-900">internSarthi</span>
+                            <div class="w-10 h-10 bg-blue-600 flex items-center justify-center rounded-lg text-white font-bold text-xl"><i class="fas fa-link"></i></div>
+                            <span class="ml-3 text-2xl font-bold text-gray-900">internSarthi</span>
                         </div>
-                        <h2 class="text-3xl font-bold text-gray-900">Find Your Dream Internship Today</h2>
+                        <h2 class="text-2xl lg:text-3xl font-bold text-gray-900">Find Your Dream Internship Today</h2>
                         <p class="mt-3 text-gray-600">Our AI-powered platform matches you with the perfect internships based on your unique skills, experience, and aspirations.</p>
                     </div>
-                     <div class="mt-8">
+                    <div class="mt-8">
                         <p class="text-sm text-gray-500 mb-2">Or sign in with:</p>
                         <div class="flex flex-col space-y-3">
-                           <button class="w-full flex items-center justify-center py-3 px-4 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition duration-300"><i class="fab fa-google mr-3"></i> Continue with Google</button>
-                           <button class="w-full flex items-center justify-center py-3 px-4 bg-blue-800 text-white rounded-lg font-semibold hover:bg-blue-900 transition duration-300"><i class="fab fa-linkedin-in mr-3"></i> Continue with LinkedIn</button>
+                            <button class="w-full flex items-center justify-center py-3 px-4 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition duration-300"><i class="fab fa-google mr-3"></i> Continue with Google</button>
+                            <button class="w-full flex items-center justify-center py-3 px-4 bg-blue-800 text-white rounded-lg font-semibold hover:bg-blue-900 transition duration-300"><i class="fab fa-linkedin-in mr-3"></i> Continue with LinkedIn</button>
                         </div>
                     </div>
                 </div>
+                
                 <div>
-                     <h2 class="text-3xl font-bold text-gray-900 mb-6">Login</h2>
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6">Login</h2>
                     <form id="signin-form" class="space-y-5">
                         <div><label for="signinEmail" class="block text-sm font-medium text-gray-700">Email address</label><input type="email" id="signinEmail" placeholder="you@example.com" required class="mt-1 block w-full px-4 py-3 border border-gray-200 rounded-lg bg-gray-50 focus:outline-none focus:ring-blue-500 focus:border-blue-500"></div>
                         <div><label for="signinPassword" class="block text-sm font-medium text-gray-700">Password</label><input type="password" id="signinPassword" placeholder="••••••••" required class="mt-1 block w-full px-4 py-3 border border-gray-200 rounded-lg bg-gray-50 focus:outline-none focus:ring-blue-500 focus:border-blue-500"></div>
@@ -226,102 +208,104 @@
                         <p class="text-sm text-center text-gray-500">Don't have an account? <a href="#" id="show-signup-link" class="font-medium text-blue-600 hover:underline">Sign up</a></p>
                     </form>
                 </div>
-             </div>
+            </div>
         </div>
     </div>
     
     <script>
-        const startJourneyBtn = document.getElementById('start-journey-btn');
-        const signupModal = document.getElementById('signup-modal');
-        const signinModal = document.getElementById('signin-modal');
-        const closeSignupModalBtn = document.getElementById('close-signup-modal');
-        const closeSigninModalBtn = document.getElementById('close-signin-modal');
-        const showSigninLink = document.getElementById('show-signin-link');
-        const showSignupLink = document.getElementById('show-signup-link');
-        const signinForm = document.getElementById('signin-form');
-        const signinBtn = document.getElementById('signin-btn');
-        const signinBtnText = document.getElementById('signin-btn-text');
-        const signinSpinner = document.getElementById('signin-spinner');
-        
-        function openModal(modal) { if (modal) modal.classList.remove('hidden'); }
-        function closeModal(modal) { if (modal) modal.classList.add('hidden'); }
-        
-        startJourneyBtn.addEventListener('click', () => openModal(signupModal));
-        closeSignupModalBtn.addEventListener('click', () => closeModal(signupModal));
-        closeSigninModalBtn.addEventListener('click', () => closeModal(signinModal));
-        showSigninLink.addEventListener('click', (e) => { e.preventDefault(); closeModal(signupModal); openModal(signinModal); });
-        showSignupLink.addEventListener('click', (e) => { e.preventDefault(); closeModal(signinModal); openModal(signupModal); });
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Modal Elements & Logic ---
+            const startJourneyBtn = document.getElementById('start-journey-btn');
+            const signupModal = document.getElementById('signup-modal');
+            const signinModal = document.getElementById('signin-modal');
+            const closeSignupModalBtn = document.getElementById('close-signup-modal');
+            const closeSigninModalBtn = document.getElementById('close-signin-modal');
+            const showSigninLink = document.getElementById('show-signin-link');
+            const showSignupLink = document.getElementById('show-signup-link');
+            const signinForm = document.getElementById('signin-form');
+            const signinBtn = document.getElementById('signin-btn');
+            const signinBtnText = document.getElementById('signin-btn-text');
+            const signinSpinner = document.getElementById('signin-spinner');
+            
+            function openModal(modal) { if (modal) modal.classList.remove('hidden'); }
+            function closeModal(modal) { if (modal) modal.classList.add('hidden'); }
+            
+            startJourneyBtn.addEventListener('click', () => openModal(signupModal));
+            closeSignupModalBtn.addEventListener('click', () => closeModal(signupModal));
+            closeSigninModalBtn.addEventListener('click', () => closeModal(signinModal));
+            
+            showSigninLink.addEventListener('click', (e) => { 
+                e.preventDefault(); 
+                closeModal(signupModal); 
+                openModal(signinModal); 
+            });
+            
+            showSignupLink.addEventListener('click', (e) => { 
+                e.preventDefault(); 
+                closeModal(signinModal); 
+                openModal(signupModal); 
+            });
 
-        signinForm.addEventListener('submit', (e) => {
-            e.preventDefault();
+            signinForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                signinBtn.disabled = true;
+                signinBtnText.textContent = "Signing In...";
+                signinSpinner.classList.remove('hidden');
+                
+                setTimeout(() => {
+                    // Simulate a successful login and redirect to a dashboard page
+                    // This should be changed to your actual dashboard URL
+                    window.location.href = "D/das1.html";
+                }, 2500);
+            });
 
-            signinBtn.disabled = true;
-            signinBtnText.textContent = "Signing In...";
-            signinSpinner.classList.remove('hidden');
-
-            setTimeout(() => {
-                // Simulate a successful login and redirect
-                window.location.href = "D/das1.html";
-            }, 2500);
-        });
-          document.addEventListener('DOMContentLoaded', () => {
+            // --- Language Translator Elements & Logic ---
             const languageToggleBtn = document.getElementById('language-toggle-btn');
             const languageMenu = document.getElementById('language-menu');
             const languageOptions = document.querySelectorAll('.language-option');
-            const goToFeaturesBtn = document.getElementById('go-to-features');
-            const goBackBtn = document.getElementById('go-back');
-            const pages = document.querySelectorAll('.page');
             
-            // --- Gemini API Configuration ---
-            const apiKey = "AIzaSyAF3zTZDhP6aYUdCocOdIXS-FpUp7vdfzE"; 
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+            // WARNING: Do NOT expose your API key in client-side code. 
+            // This is a major security risk. Use a backend server to make API calls.
+            const apiKey = "YOUR_GEMINI_API_KEY_HERE"; 
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
 
-            // Cache to store fetched translations
             const translationCache = {};
 
             async function callGemini(prompt, retries = 3, delay = 1000) {
                 const payload = { contents: [{ parts: [{ text: prompt }] }] };
-
                 try {
                     const response = await fetch(apiUrl, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(payload)
                     });
-
                     if (response.status === 429 || response.status === 503) {
                         if (retries > 0) {
                             await new Promise(res => setTimeout(res, delay));
-                            return callGemini(prompt, retries - 1, delay * 2); // Exponential backoff
+                            return callGemini(prompt, retries - 1, delay * 2);
                         } else {
                             throw new Error(`API call failed after multiple retries with status: ${response.status}`);
                         }
                     }
-
                     if (!response.ok) throw new Error(`API call failed: ${response.status}`);
                     
                     const result = await response.json();
                     let responseText = result.candidates[0].content.parts[0].text;
                     responseText = responseText.replace(/```json/g, '').replace(/```/g, '').trim();
                     return responseText;
-
                 } catch (error) {
-                     // Don't log retries as errors
-                    if (!error.message.includes('retries')) {
-                        console.error("Gemini API Error:", error);
-                    }
-                    // On final failure, extract the original JSON to revert text
+                    console.error("Gemini API Error:", error);
                     const originalJsonMatch = prompt.match(/JSON: (\{.*\})/);
                     if(originalJsonMatch && originalJsonMatch[1]) {
                         return originalJsonMatch[1];
                     }
-                    return "{}"; // Return empty JSON string on failure
+                    return "{}";
                 }
             }
 
             function applyTranslations(translations) {
                 for (const key in translations) {
-                    const element = document.querySelector(`.page.active [data-key="${key}"]`);
+                    const element = document.querySelector(`[data-key="${key}"]`);
                     if (element) {
                         element.textContent = translations[key];
                     }
@@ -330,9 +314,8 @@
 
             async function setLanguage(lang) {
                 localStorage.setItem('preferredLanguage', lang);
-                const elements = document.querySelectorAll('.page.active [data-key]');
+                const elements = document.querySelectorAll('[data-key]');
                 
-                // Set original text on first run
                 elements.forEach(el => {
                     if (!el.dataset.originalText) {
                         el.dataset.originalText = el.textContent.trim();
@@ -347,7 +330,6 @@
                     return;
                 }
 
-                // Check cache first
                 if (translationCache[lang]) {
                     applyTranslations(translationCache[lang]);
                     languageMenu.classList.add('hidden');
@@ -366,7 +348,7 @@
                 try {
                     const translatedJsonString = await callGemini(prompt);
                     const translatedTexts = JSON.parse(translatedJsonString);
-                    translationCache[lang] = translatedTexts; // Cache the result
+                    translationCache[lang] = translatedTexts;
                     applyTranslations(translatedTexts);
                 } catch (error) {
                     console.error("Failed to parse translated content:", error);
@@ -376,7 +358,6 @@
                 }
             }
 
-            // --- Event Listeners ---
             languageToggleBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
                 languageMenu.classList.toggle('hidden');
@@ -396,27 +377,10 @@
                 }
             });
             
-            // --- Page Navigation ---
-            function showPage(pageId) {
-                pages.forEach(page => {
-                    page.classList.toggle('active', page.id === pageId);
-                });
-                setLanguage(localStorage.getItem('preferredLanguage') || 'en');
-            }
-
-            goToFeaturesBtn.addEventListener('click', () => showPage('page-features'));
-            goBackBtn.addEventListener('click', () => showPage('page-welcome'));
-
-            // Load saved language or default to English
+            // Load saved language or default to English on initial load
             const savedLang = localStorage.getItem('preferredLanguage') || 'en';
             setLanguage(savedLang);
-            showPage('page-welcome'); // Show initial page
         });
     </script>
-
 </body>
 </html>
-
-
-
-
